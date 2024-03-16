@@ -1,4 +1,13 @@
+/**
+ * Get the length of the longest increasing subsequence in an array, topdown recursive approach with memoization
+ * @param nums 
+ * @returns 
+ */
 function lengthOfLISTd(nums: number[]): number {
+	//Complexity:
+	//Time: O(n^2) - we are solving subproblems, and there are n^2 subproblems
+	//Space: O(n^2) - memoization table
+
 	// Create a memoization table to store the results of subproblems
 	const memo: number[][] = [];
 
@@ -23,8 +32,11 @@ function lengthOfLISTd(nums: number[]): number {
 		// Exclude the current element
 		const exclude = lengthOfLISRecurse(prevIndex, currIndex + 1);
 
-		// Store the result in the memo table
+		// if row in memo doesn't exist, create it
 		memo[prevIndex] = memo[prevIndex] || [];
+
+		// Store the result in the memo table, the result is the maximum of including and excluding 
+		// the current element
 		memo[prevIndex][currIndex] = Math.max(include, exclude);
 		return memo[prevIndex][currIndex];
 	}
