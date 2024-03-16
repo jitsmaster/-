@@ -34,6 +34,9 @@ class SnakeGame {
     }
 
     move(direction: string): number {
+        //Complexity:
+        //Time: O(1) - constant time, no matter how big the snake is, the time to move is the same
+        //Space: O(1) - constant space, no extra space is used, only the space for the snake and food
         const head = this.snake[0];
 
         //convert the number coords to row and column
