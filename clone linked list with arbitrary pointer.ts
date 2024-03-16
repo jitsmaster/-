@@ -1,4 +1,4 @@
-class LinkedListNode {
+export class LinkedListNode {
     data: any;
     next: LinkedListNode | undefined;
     arbitrary: LinkedListNode | undefined;

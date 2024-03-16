@@ -26,6 +26,7 @@ function canFinish(numCourses: number, prerequisites: number[][]): boolean {
     });
 
     let count = 0;
+    //breadth first search
     while (queue.length > 0) {
         // dequeue the course
         const course = queue.shift()!;
