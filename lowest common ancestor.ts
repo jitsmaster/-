@@ -10,7 +10,7 @@ class TreeNode {
 	}
 }
 
-function lowestCommonAncestor(root: TreeNode | null, p: TreeNode, q: TreeNode): TreeNode | null {
+function lowestCommonAncestorOfBinarySearchTree(root: TreeNode | null, p: TreeNode, q: TreeNode): TreeNode | null {
 	//Time complexity: O(n) - we are traversing the tree once
 	//Space complexity: O(1) - constant space with 2 variables
 
@@ -39,4 +39,33 @@ function lowestCommonAncestor(root: TreeNode | null, p: TreeNode, q: TreeNode): 
 	}
 
 	return null;
+}
+
+function lowestCommonAncestorOfBinaryTree(root: TreeNode | null, p: TreeNode, q: TreeNode): TreeNode | null {
+	//Time complexity: O(n) - we are traversing the tree once
+	//Space complexity: O(n) - the call stack can go as deep as the height of the tree
+
+	//It's not a binary search tree, so we can't use the value of the nodes to determine the lowest common ancestor
+	//We have to traverse the tree to find the lowest common ancestor
+	//We can use a recursive approach to traverse the tree
+
+	//if we reach the end of the tree, return null
+	if (!root) 
+		return null;
+
+	//if we find either of the nodes, return the node
+	if (root === p || root === q) 
+		return root;
+
+	//search the left side of the tree
+	const left = lowestCommonAncestorOfBinaryTree(root.left, p, q);
+	//search the right side of the tree
+	const right = lowestCommonAncestorOfBinaryTree(root.right, p, q);
+
+	//if we find both nodes, then the current node is the lowest common ancestor
+	if (left && right) 
+		return root;
+
+	//if we find only one of the nodes, then return that node
+	return left || right;
 }
