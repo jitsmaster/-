@@ -8,16 +8,16 @@ function solveNQueens(n: number): string[][] {
         O(n2)
      */
     const result: string[][] = [];
-    const board: number[] = [];
+    // const board: number[] = [];
 
     const boardTemplate = Array(n).fill(".").join("");
-    function printBoard() {
-        return board.map((col) => 
-        `${boardTemplate.slice(0, col)}Q${boardTemplate.slice(col + 1)}`
-    );      
+    function printBoard(board: number[]) {
+        return board.map((col) =>
+            `${boardTemplate.slice(0, col)}Q${boardTemplate.slice(col + 1)}`
+        );
     };
 
-    function isSafe (colNum: number) {
+    function isSafe(colNum: number, board: number[]) {
         //check all previous rows to see if the current column is safe
         for (let row = 0; row < board.length; row++) {
             const col = board[row];
@@ -35,23 +35,23 @@ function solveNQueens(n: number): string[][] {
                 return false;
             }
         }
-        
+
         return true;
     };
 
-    function backtrack() {
+    function backtrack(board: number[]) {
         if (board.length === n) {
             //board is full, add the result to the result array
-            result.push(printBoard());
+            result.push(printBoard(board));
             return;
         }
-        
+
         for (let col = 0; col < n; col++) {
-            if (isSafe(col)) {
+            if (isSafe(col, board)) {
                 //step1: push the current option to the board
                 board.push(col);
                 //step2: backtrack
-                backtrack();
+                backtrack(board);
                 //step3: undo the step1 by popping the last element from the board, this line 
                 // is reached, when step2 of recursive backtracking didn't product  result
                 board.pop();
@@ -59,7 +59,7 @@ function solveNQueens(n: number): string[][] {
         }
     };
 
-    backtrack();
+    backtrack([]);
 
     return result;
 };
