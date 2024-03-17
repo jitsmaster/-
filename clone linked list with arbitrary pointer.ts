@@ -1,12 +1,12 @@
 export class LinkedListNode {
     data: any;
-    next: LinkedListNode | undefined;
-    arbitrary: LinkedListNode | undefined;
+    next: LinkedListNode | null;
+    arbitrary: LinkedListNode | null;
 
     constructor(value: any) {
         this.data = value;
-        this.next = undefined;
-        this.arbitrary = undefined;
+        this.next = null;
+        this.arbitrary = null;
     }
 }
 
@@ -45,7 +45,7 @@ function cloneLinkedList(head: LinkedListNode | undefined): LinkedListNode | und
     currentNode = clonedHead as LinkedListNode;
     while (currentNode) {
         if (currentNode.arbitrary) {
-            currentNode.arbitrary = map.get(currentNode.arbitrary);
+            currentNode.arbitrary = map.get(currentNode.arbitrary) as LinkedListNode;
         }
 
         currentNode = currentNode.next as LinkedListNode;
