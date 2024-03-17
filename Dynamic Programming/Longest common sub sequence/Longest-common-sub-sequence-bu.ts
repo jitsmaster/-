@@ -1,3 +1,5 @@
+//note: this works for both string and array
+//same type of sequences
 function longestCommonSubsequenceBu(text1: string, text2: string): number {
 	//Complexity:
 	//Time: O(n * m) - we have to go through all characters of both strings
@@ -12,7 +14,7 @@ function longestCommonSubsequenceBu(text1: string, text2: string): number {
 
 	for (let i1 = 1; i1 <= text1.length; i1++) {
 		for (let i2 = 1; i2 <= text2.length; i2++) {
-			//2 characters are the same, so current postion value
+			//2 previous characters are the same, so current postion value
 			//is 1 plus 1 to the previous longest common subsequence
 			if (text1[i1 - 1] === text2[i2 - 1]) {
 				//key logic: same character will cause current 
