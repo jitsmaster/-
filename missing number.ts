@@ -70,3 +70,19 @@ function kthMissingNumber(arr: number[], k: number): number {
 
 	return num - 1; // Return the last number checked minus 1 as the kth missing number
 };
+
+function onlyMissingNumberSimple(nums: number[]) {
+	//Complexity Analysis
+	//Time Complexity: O(N), where N is the length of the nums array. - We iterate through the array once and build a the complete sum once.
+	//Space Complexity: O(1) - just 2 variables are used, constant space.
+
+	// the simple algorithm is to minus the sum of the array from the complete sum of the array.
+	const sum = nums.reduce((acc, curr) => acc + curr, 0);
+
+	let completeSum = 0;
+	for (let i = 0; i <= nums.length; i++) {
+		completeSum += i;
+	}
+
+	return completeSum - sum;
+}
