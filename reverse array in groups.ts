@@ -1,4 +1,4 @@
-import type { LinkedListNode } from "./clone linked list with arbitrary pointer";
+import type { LinkedListNode } from "./copy(clone) linked list with arbitrary pointer";
 
 function reverseArrayInKGroups(arr: any[], k: number): void {
     //in place reverse

@@ -1,4 +1,4 @@
-import type { LinkedListNode } from "../clone linked list with arbitrary pointer";
+import type { LinkedListNode } from "../copy(clone) linked list with arbitrary pointer";
 
 function hasCycle(head: LinkedListNode | null): boolean {
     //Complexity:
