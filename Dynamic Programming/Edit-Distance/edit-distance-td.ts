@@ -1,4 +1,8 @@
 function minDistance(word1: string, word2: string): number {
+	// Complexity:
+	// Time: O(n * m) - n is the length of word1, m is the length of word2
+	// Space: O(n * m) - n is the length of word1, m is the length of word2
+
 	// Create a memoization table to store the calculated distances
 	const memo: number[][] = [];
 
@@ -13,7 +17,7 @@ function minDistance(word1: string, word2: string): number {
 			return memo[i][j];
 		}
 
-		// If the last characters of the words are the same, no operation is needed
+		// If the last characters of the words are the same, recurse diagonally, without any operation
 		if (word1[i - 1] === word2[j - 1]) {
 			return calculateDistanceRecurse(i - 1, j - 1);
 		}
