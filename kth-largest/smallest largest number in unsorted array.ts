@@ -2,7 +2,7 @@ import { MaxHeap, MinHeap } from "@datastructures-js/heap";
 
 export function findKthLargestNumber(nums: number[], k: number): number {
     //of course, any kth largest/smallest problem on unsorted array just use a heap
-    //we use MaxPriorityQueue from datastructures-js/priority-queue
+    //we use MaxHeap from datastructures-js/heap
     //and dequeue actually happens from the end, which are the largest numbers;
 
     const heap = new MaxHeap<number>();
@@ -26,7 +26,7 @@ export function findKthLargestNumber(nums: number[], k: number): number {
 
 export function findKthSmallestNumber(nums: number[], k: number): number {
     //of course, any kth largest/smallest problem on unsorted array just use a heap
-    //we use MinPriorityQueue from datastructures-js/priority-queue
+    //we use MinHeap from datastructures-js/heap
     //and dequeue actually happens from the end, which are the smallest numbers;
 
     const heap = new MinHeap<number>();

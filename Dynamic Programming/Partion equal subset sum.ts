@@ -118,7 +118,9 @@ function canPartitionBottomUp(numbers: number[])   : boolean {
                 //we have two options, either to include the number or exclude the number
                 //if we include the number, then the result is same as the result of the previous subproblem
                 //if we exclude the number, then the result is previous subproblem result with the same sum
-                dp[i][j] = dp[i - 1][j] || dp[i - 1][j - numbers[i - 1]];
+                //so the result is the logical OR of the two options
+                dp[i][j] = dp[i - 1][j] 
+                    || dp[i - 1][j - numbers[i - 1]];
             } else {
                 //current number is greater than the current sum
                 //we can only exclude the number

@@ -12,6 +12,7 @@ function lengthOfLIS(nums: number[]): number {
 	//each item in the dp array represents the length of the longest increasing subsequence
 	const dp: number[] = new Array(nums.length).fill(1);
 
+	//i for current number, j for previous number
 	for (let i = 1; i < nums.length; i++) {
 		for (let j = 0; j < i; j++) {
 			//if the current number is greater than the previous number, then we can include the current number
