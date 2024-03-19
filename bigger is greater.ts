@@ -5,12 +5,6 @@
 
 // It must be greater than the original word
 // It must be the smallest word that meets the first condition
-// Example
-
-// The next largest word is .
-
-// Complete the function biggerIsGreater below to create and return the new string meeting the criteria. If it is
-// not possible, return no answer.
 function biggerIsGreater(word: string): string {
 	// The algorithm is as follows:
 	// 1. Find the first character that is smaller than the character to its right, start from the end
