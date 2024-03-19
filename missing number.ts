@@ -53,11 +53,12 @@ function kthMissingNumber(arr: number[], k: number): number {
 
 	let missed = 0; // Initialize a variable to keep track of the number of missing numbers
 	let index = 0; // Initialize a variable to keep track of the current index in the array
-	let num = 1; // Initialize a variable to keep track of the current number
+	let num = 0; // Initialize a variable to keep track of the current number
 	let length = arr.length; // Get the length of the array
 
 	// Start a while loop that runs as long as the number of missing numbers is less than k
-	while (missed < k) {
+	//and not reaching the end of the array
+	while (missed < k && num <= arr[length - 1]) {
 		// Check if the current index is greater than or equal to the length of the array
 		// or if the value at the current index in the array is not equal to the current number
 		if (index >= length || arr[index] !== num) {
@@ -68,7 +69,9 @@ function kthMissingNumber(arr: number[], k: number): number {
 		++num; // Increment the current number
 	}
 
-	return num - 1; // Return the last number checked minus 1 as the kth missing number
+	return num - 1;
+	//Return the last number checked minus 1 as the kth missing number, 
+	//or the last item in the array
 };
 
 function onlyMissingNumberSimple(nums: number[]) {
