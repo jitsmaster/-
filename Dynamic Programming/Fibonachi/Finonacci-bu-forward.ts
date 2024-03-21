@@ -1,3 +1,9 @@
+/**
+ * Note, another way to state the problem is climing stairs
+ * you can take either 1 or 2 steps at a time, how many ways to climb n steps
+ * @param n 
+ * @returns 
+ */
 function fibonacci(n: number): number {
   // Create a table to store the results of subproblems
   // The size of the table is n + 1, reason being we need to consider
