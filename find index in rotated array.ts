@@ -13,6 +13,7 @@ function binarySearchInRotatedArray(nums: number[], target: number): number {
 		if (nums[left] <= nums[mid]) {
 			// Check if the target is within the left half
 			if (nums[left] <= target && target < nums[mid]) {
+				//if yes, then move to left half
 				right = mid - 1;
 			} else {
 				left = mid + 1;
@@ -22,6 +23,7 @@ function binarySearchInRotatedArray(nums: number[], target: number): number {
 		else {
 			// Check if the target is within the right half
 			if (nums[mid] < target && target <= nums[right]) {
+				//if yes, then move the right half
 				left = mid + 1;
 			} else {
 				right = mid - 1;

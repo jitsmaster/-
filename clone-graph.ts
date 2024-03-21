@@ -17,9 +17,7 @@ function cloneGraph(node: GraphNode | null): GraphNode | null {
 	//use a map to store the visited nodes
 	const visited = new Map<GraphNode, GraphNode>();
 
-	const cloneNodeRecurse = (original: GraphNode): GraphNode => {
-		//since graph might have cycles, we jump out
-		//of the recursion if we have visited the node before
+	function cloneNodeRecurse(original: GraphNode): GraphNode {
 		if (visited.has(original)) {
 			return visited.get(original)!;
 		}
@@ -27,13 +25,10 @@ function cloneGraph(node: GraphNode | null): GraphNode | null {
 		const cloned = new GraphNode(original.val, []);
 		visited.set(original, cloned);
 
-		//clone all the neighbors
-		for (const neighbor of original.neighbors) {
-			cloned.neighbors.push(cloneNodeRecurse(neighbor));
-		}
+		cloned.neighbors = original.neighbors.map(cloneNodeRecurse);
 
 		return cloned;
-	};
+	}
 
 	return cloneNodeRecurse(node);
 }

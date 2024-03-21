@@ -100,7 +100,7 @@ function canPartitionBottomUp(numbers: number[])   : boolean {
     }
 
     const targetSum = totalSum / 2;
-    //construct the memoization table
+    //construct the dp table
     //row axis represents the numbers index
     //column axis represents the sum
     const dp: boolean[][] = Array.from({ length: numbers.length + 1 }, () => Array(targetSum + 1).fill(false));
@@ -111,8 +111,7 @@ function canPartitionBottomUp(numbers: number[])   : boolean {
     }
 
     for (let i = 1; i <= numbers.length; i++) {
-        for (let j = 1; j <= targetSum; j++) {
- 
+        for (let j = 1; j <= targetSum; j++) { 
             if (j >= numbers[i - 1]) {
                 //current number is less then or equal to the current sum
                 //we have two options, either to include the number or exclude the number

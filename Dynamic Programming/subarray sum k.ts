@@ -24,7 +24,6 @@ function subarraySum(nums: number[], k: number): number {
         }
         //if the sum is already in the map, we just increment the frequency
         //if not, we add the sum to the map with the frequency of 1
-
         map.set(sum, (map.get(sum) || 0) + 1);
 
         //above is the summary of the following code

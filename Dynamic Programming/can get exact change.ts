@@ -1,4 +1,4 @@
-function canGetExactChangeTD(targetMoney: number, denominations: number[]) : boolean {
+function canGetExactChangeTD(targetMoney: number, denominations: number[]): boolean {
     //sort of dp, using topdown with momoization
     //key is the donomination, value is the count
     let memo = new Map<number, boolean>();
@@ -34,21 +34,20 @@ function canGetExactChangeTD(targetMoney: number, denominations: number[]) : boo
  * @param {number[]} denominations - An array of available denominations.
  * @returns {boolean} - Returns true if it is possible to make exact change, false otherwise.
  */
-function canGetExactChangeBu(targetMoney: number, denominations: number[]) : boolean {
+function canGetExactChangeBu(targetMoney: number, denominations: number[]): boolean {
     //fill up the dp array with false, the size is always targetMoney + 1, typical but approach
-    //since the first item is always discarded.
+    //since the first item is the base value
     let dp = new Array(targetMoney + 1).fill(false)
     dp[0] = true;
 
+    //for each money amount, from 1 dollar to target, check if it can be made up using the denominations
     for (let i = 1; i <= targetMoney; i++) {
-        //for each money amount, from 1 dollar to target, check if it can be made up using the denominations
-        for (let j = 0; j < denominations.length; j++) {
-            //get the remaining amount after using the current denomination
-            const remains = i - denominations[j];
-            //if still have some money left, then check if it can be made up using the remaining denominations
+        for (let denomination of denominations) {
+            //if the current denomination is less than the current money amount, then we can use it
+            const remains = i - denomination;
             if (remains >= 0) {
-                //if the current amount is cached already, use it, otherwise, check if the remaining amount
-                //is cached, if yes, use that. If none of them is cached, then it's remainged as false
+                //since the index is the money amount, all we need to do is figuring out
+                //if the current money amount or remains money amount can get exact change
                 dp[i] = dp[i] || dp[remains];
             }
         }

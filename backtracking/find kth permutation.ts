@@ -44,7 +44,7 @@ function findKthPermutation(v: number[], k: number): number[] {
 		}
 		//(k-1)/fact is the index of the number to be added to the result
 		result.push(numbers[nextIdx]);
-		numbers.splice(Math.floor((k - 1) / fact), 1);
+		numbers.splice(nextIdx, 1);
 
 		if (numbers.length === 0) {
 			break;
