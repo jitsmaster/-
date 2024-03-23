@@ -9,6 +9,20 @@
  * @returns 
  */
 function canFinish(numCourses: number, prerequisites: number[][]): boolean {
+    // Algorithm:
+    // 1. Create a graph and in-degree map
+    // 2. Build the graph and in-degree map based on the prerequisites
+    // 3. Add the courses with 0 in-degree to the queue
+    // 4. While the queue is not empty, dequeue the course and increment the count
+    // 5. For each neighbor of the course, decrement the in-degree by 1
+    // 6. If the in-degree of the neighbor becomes 0, add it to the queue
+    // 7. Repeat the process until the queue is empty
+    // 8. If the count is equal to the number of courses, return true, else return false
+
+    //Complexity:
+    //Time: O(V + E) - we are iterating through the vertices and edges
+    //Space: O(V + E) - the size of the graph and in-degree map
+    
     // Create a graph
     // The graph is represented as an adjacency list (map)
     // The key is the course and the value is the list of courses that are dependent on the key course

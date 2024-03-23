@@ -1,4 +1,4 @@
-import { findMedianWithHeaps } from "./2 heaps find median";
+import { findMedianWithHeaps } from "./2 heaps find median of sorted array";
 
 /**
  *  Median Stream
