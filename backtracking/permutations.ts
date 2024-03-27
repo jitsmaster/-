@@ -28,7 +28,7 @@ export function permute(nums: number[]): number[][] {
 	return result;
 }
 
-export function permuteString(str: string) : string[] {
+export function permuteString(str: string): string[] {
 	//backtracking
 	const result: string[] = [];
 
