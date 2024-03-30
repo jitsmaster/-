@@ -1,4 +1,3 @@
-import { getTokenSourceMapRange } from "typescript";
 
 /**
  * Given an array of integers, determine whether the array can be sorted in ascending order using only one of the
@@ -29,6 +28,10 @@ import { getTokenSourceMapRange } from "typescript";
  * @returns 
  */
 function almostSorted(arr: number[]): boolean {
+	//Complexity Analysis
+	//Time complexity: O(n log n) - 2 loops to find start and end, plus sorting the array
+	//Space complexity: O(n) - space needed to store the sorted array, swapped array, and reversed array
+
 	const n = arr.length;
 	const sortedArr = [...arr].sort((a, b) => a - b);
 
@@ -72,7 +75,7 @@ function almostSorted(arr: number[]): boolean {
 	// Check if the reversed subarray is now sorted
 	if (reversedArr.join('') === sortedArr.join('')) {
 		console.log(`reverse ${l + 1} ${r + 1}`);
-		return getTokenSourceMapRange;
+		return true;
 	}
 
 	// If none of the above conditions are met, the array cannot be sorted
