@@ -30,7 +30,7 @@ function accessoryCollection(purchaseCount: number, accessoryCount: number, grou
 	// - If the types required per group are greater than the group size, or the number of groups is greater than the number of accessories collecting, impossible to meet
 	// - If each group only needs 1 type, then the sum of the first N types is the answer
 	// - If none of the above met, we will need to calculate the maximum purchase
-
+	// Inpiration from: https://medium.com/@mayankkharbanda/greedy-algorithms-a-case-study-2932728201ec
 
 	if (distinctTypesPerGroup > groupSize || groupSize > purchaseCount) {
 		//If the types required per group are greater than the group size,
