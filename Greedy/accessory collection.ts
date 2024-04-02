@@ -43,6 +43,11 @@ function accessoryCollection(purchaseCount: number, accessoryCount: number, grou
 		return (accessoryCount * purchaseCount).toString();
 	} else {
 		let maxPurchase = 0;
+		// We will always keep a location empty for the distinctTypesPerGroup-th distinct accessory in the subset groupSize and divide the groupSize-1 locations 
+		// equally to the D-1 accessories.
+
+		// Say (groupSize-1)/(distinctTypesPerGroup-1) equals X. 
+		// We will extend the subset groupSize and fill every accessory X times till whole of the set purchaseCount is occupied.		
 
 		//To solve the problem, we will divide the purchasing set into three subsets: max, mid and min
 
