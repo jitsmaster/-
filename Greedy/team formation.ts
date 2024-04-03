@@ -1,4 +1,3 @@
-
 /**
  * Divide the array into teams, while each team's members are increment of another member by 1
  * Find the largest smallest team size
