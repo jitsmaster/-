@@ -1,13 +1,13 @@
-import {MinPriorityQueue } from "@datastructures-js/priority-queue";
+import { MinPriorityQueue } from "@datastructures-js/priority-queue";
 
- class ListNode {
-         val: number
-         next: ListNode | null
-         constructor(val?: number, next?: ListNode | null) {
-             this.val = (val===undefined ? 0 : val)
-             this.next = (next===undefined ? null : next)
-         }
-     }
+class ListNode {
+	val: number
+	next: ListNode | null
+	constructor(val?: number, next?: ListNode | null) {
+		this.val = (val === undefined ? 0 : val)
+		this.next = (next === undefined ? null : next)
+	}
+}
 
 function mergeKLists(lists: Array<ListNode | null>): ListNode | null {
 	//Use priority queue to store the heads of the linked lists,
@@ -43,8 +43,8 @@ function merge2SortedLinkedList(l1: ListNode | null, l2: ListNode | null): ListN
 	if (!l1) return l2;
 	if (!l2) return l1;
 
-	let dummy = new ListNode();
-	let tail = dummy;
+	let newHeadPrefix = new ListNode();
+	let tail = newHeadPrefix;
 
 	// Perform merge of 2 sorted linked lists both exist
 	while (l1 && l2) {
@@ -67,5 +67,5 @@ function merge2SortedLinkedList(l1: ListNode | null, l2: ListNode | null): ListN
 	//if either of the list has remaining nodes, add them to the tail
 	tail.next = l1 || l2;
 
-	return dummy.next;
+	return newHeadPrefix.next;
 }

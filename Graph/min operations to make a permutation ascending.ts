@@ -46,10 +46,3 @@ function minOperationsToMakePermutationAscending(n: number, permutation: number[
 }
 
 
-
-
-// Example usage
-const N = 5;
-const permutation = [3, 1, 2, 5, 4];
-const minOperations = minOperationsToMakePermutationAscending(N, permutation);
-console.log(`Minimum number of operations: ${minOperations}`);

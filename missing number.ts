@@ -81,11 +81,9 @@ function onlyMissingNumberSimple(nums: number[]) {
 
 	// the simple algorithm is to minus the sum of the array from the complete sum of the array.
 	const sum = nums.reduce((acc, curr) => acc + curr, 0);
+	const n = nums.length;
 
-	let completeSum = 0;
-	for (let i = 0; i <= nums.length; i++) {
-		completeSum += i;
-	}
+	const completeSum = n * (n + 1) / 2;
 
 	return completeSum - sum;
 }
