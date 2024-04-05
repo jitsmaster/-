@@ -9,6 +9,9 @@ function shortestCommonSupersequence(str1: string, str2: string): string {
 	let i = 0;
 	let j = 0;
 
+	//go through the LCS and add the characters from str1 and str2
+	//the purpose is to cut off at the end of lcs, and get the length of remaining characters
+	//in str1 and str2
 	for (const chr of lcs) {
 		while (str1[i] !== chr) {
 			result += str1[i];
@@ -20,7 +23,7 @@ function shortestCommonSupersequence(str1: string, str2: string): string {
 			j++;
 		}
 
-		result +=chr;
+		result += chr;
 		i++;
 		j++;
 	}
