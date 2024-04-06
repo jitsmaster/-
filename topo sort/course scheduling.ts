@@ -9,70 +9,78 @@
  * @returns 
  */
 function canFinish(numCourses: number, prerequisites: number[][]): boolean {
-    // Algorithm:
-    // 1. Create a graph and in-degree map
-    // 2. Build the graph and in-degree map based on the prerequisites
-    // 3. Add the courses with 0 in-degree to the queue
-    // 4. While the queue is not empty, dequeue the course and increment the count
-    // 5. For each neighbor of the course, decrement the in-degree by 1
-    // 6. If the in-degree of the neighbor becomes 0, add it to the queue
-    // 7. Repeat the process until the queue is empty
-    // 8. If the count is equal to the number of courses, return true, else return false
+	// Algorithm:
+	// 1. Create a graph and in-degree map
+	// 2. Build the graph and in-degree map based on the prerequisites
+	// 3. Add the courses with 0 in-degree to the queue
+	// 4. While the queue is not empty, dequeue the course and increment the count
+	// 5. For each neighbor of the course, decrement the in-degree by 1
+	// 6. If the in-degree of the neighbor becomes 0, add it to the queue
+	// 7. Repeat the process until the queue is empty
+	// 8. If the count is equal to the number of courses, return true, else return false
 
-    //Complexity:
-    //Time: O(V + E) - we are iterating through the vertices and edges
-    //Space: O(V + E) - the size of the graph and in-degree map
-    
-    // Create a graph
-    // The graph is represented as an adjacency list (map)
-    // The key is the course and the value is the list of courses that are dependent on the key course
-    const graph = new Map<number, number[]>();
-    // Create an in-degree map
-    // The key is the course and the value is the number of courses that are dependent on the key course
-    const inDegree = new Map<number, number>();
+	//Complexity:
+	//Time: O(V + E) - we are iterating through the vertices and edges
+	//Space: O(V + E) - the size of the graph and in-degree map
 
-    // Initialize the graph and in-degree map
-    for (let i = 0; i < numCourses; i++) {
-        graph.set(i, []);
-        inDegree.set(i, 0);
-    }
+	// Create a graph
+	// The graph is represented as an adjacency list (map)
+	// The key is the course and the value is the list of courses that are dependent on the key course
+	const graph = new Map<number, number[]>();
+	// Create an in-degree map
+	// The key is the course and the value is the number of courses that are dependent on the key course
+	//note: in-degree is the number of edges that are coming into a node
+	const inDegree = new Map<number, number>();
 
-    // Build the graph and in-degree map based on the prerequisites
-    for (let [course, prereq] of prerequisites) {
-        graph.get(prereq)!.push(course); // Add the edge, we know that the pre is the parent and course is the child
-        inDegree.set(course, inDegree.get(course)! + 1); // Increment the in-degree of the course
-    }
+	// Initialize the graph and in-degree map for each entry corresponding to the number of courses
+	for (let i = 0; i < numCourses; i++) {
+		graph.set(i, []);
+		inDegree.set(i, 0);
+	}
 
-    // Add the courses with 0 in-degree to the queue, these are the courses that can be taken first
-    // also called "source" nodes. We will start with these nodes and then keep adding the nodes with 0 in-degree
-    const queue: number[] = [];
-    inDegree.forEach((value, key) => {
-        if (value === 0) {
-            queue.push(key);
-        }
-    });
+	// Build the graph and in-degree map based on the prerequisites
+	for (let [course, prereq] of prerequisites) {
+		graph.get(prereq)!.push(course); // Add the edge, we know that the pre is the parent and course is the child
+		inDegree.set(course, inDegree.get(course)! + 1); // Increment the in-degree of the course
+	}
 
-    let count = 0;
-    while (queue.length > 0) {
-        // dequeue the course
-        const course = queue.shift()!;
-        count++;
+	// Add the courses with 0 in-degree to the queue, these are the courses that can be taken first
+	// also called "source" nodes. We will start with these nodes and then keep adding the nodes with 0 in-degree
+	const queue: number[] = [];
+	inDegree.forEach((value, key) => {
+		//only add courses with no prerequisites
+		if (value === 0) {
+			queue.push(key);
+		}
+	});
 
-        //since we build the graph already, we can just get the next sources from prereq
-        //and decrement their in-degree by 1
-        for (const neighbor of graph.get(course)!) {
+	//note the queue system is very much like bfs
+	//have queue inited, and repeat to add more items to the queue
+	//and dequeue the items next round
+	//until the queue is empty
+	let count = 0;
+	while (queue.length > 0) {
+		// dequeue the course
+		const course = queue.shift()!;
+		count++;
 
-            /// decrement the in-degree of the neighbor by 1
-            inDegree.set(neighbor, inDegree.get(neighbor)! - 1);
+		//since we build the graph already, we can just get the next sources from prereq
+		//and decrement their in-degree by 1
+		for (const neighbor of graph.get(course)!) {
 
-            // if the in-degree of the neighbor becomes 0, add it to the queue
-            if (inDegree.get(neighbor)! === 0) {
-                queue.push(neighbor);
-            }
+			//decrement the in-degree of the neighbor by 1
+			//for each neighbor
+			inDegree.set(neighbor, inDegree.get(neighbor)! - 1);
 
-            // repeat the process until the queue is empty
-        }
-    }
+			// if the in-degree of the neighbor becomes 0, add it to the queue
+			// reason: we can take this course now since all its prerequisites are done
+			if (inDegree.get(neighbor)! === 0) {
+				queue.push(neighbor);
+			}
 
-    return count === numCourses;
+			// repeat the process until the queue is empty
+		}
+	}
+
+	return count === numCourses;
 };
