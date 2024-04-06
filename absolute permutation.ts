@@ -1,3 +1,16 @@
+/**
+ * We define to be a permutation of the first natural numbers in the range.
+ * Let denote the value at position in permutation using -based indexing.
+ * 
+ * is considered to be an absolute permutation if holds true for every .
+ * 
+ * Given n and k, print the lexicographically smallest absolute permutation.
+ * If no absolute permutation exists, print -1.
+ * 
+ * @param n 
+ * @param k 
+ * @returns 
+ */
 function absolutePermutation(n: number, k: number): number[] {
 	//we have to consider 2 scenarios:
 	//1. if k is 0, the permutation is the same as the original sequence

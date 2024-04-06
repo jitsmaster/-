@@ -1,4 +1,4 @@
-import { TreeNode } from '../Breadth-first-search';
+import { TreeNode } from '../bfs and dfs/Breadth-first-search';
 
 //principal of in order traversal
 //left -> root -> right
@@ -110,9 +110,9 @@ function checkIfBinaryTreeIsBST(root: TreeNode | null) {
 
 	//use forloop instead of reduce,
 	//can check out early if anomaly is found
-	for (let i = 0; i<inOrderResult.length - 1; i++) {
-		if (inOrderResult[i] > inOrderResult[i+1])
-		  return false;
+	for (let i = 0; i < inOrderResult.length - 1; i++) {
+		if (inOrderResult[i] > inOrderResult[i + 1])
+			return false;
 	}
 
 	return true;

@@ -1,7 +1,7 @@
 import { findMedianWithHeaps } from "./2 heaps find median of sorted array";
 
 /**
- *  Median Stream
+ * Median Stream or running median
  * You're given a list of n integers arr[0..(n-1)]. You must compute a list output[0..(n-1)] such that, 
  * for each index i (between 0 and n-1, inclusive), output[i] is equal to the median of the elements arr[0..i] 
  * (rounded down to the nearest integer).

@@ -1,31 +1,30 @@
-function isMatch(s: string, p: string): boolean {
-	let cache: Map<string, boolean> = new Map();
+function isMatch(str: string, regexPattern: string): boolean {
+	let memo: Map<string, boolean> = new Map();
 
 	//top down with memoization
+	function dfs(strPos: number, patternPos: number): boolean {
+		const key: string = strPos + '-' + patternPos;
+		if (memo.has(key))
+			return !!memo.get(key);
 
-	function dfs(ps, pp): boolean {
-		const key: string = ps + '-' + pp;
-		if (cache.has(key))
-			return !!cache.get(key);
-
-		if (pp >= p.length) {
-			if (ps >= s.length) return true;
+		if (patternPos >= regexPattern.length) {
+			if (strPos >= str.length) return true;
 			return false;
 		}
 
-		const match: boolean = ps < s.length && (s[ps] === p[pp] || p[pp] === '.');
+		const match: boolean = strPos < str.length && (str[strPos] === regexPattern[patternPos] || regexPattern[patternPos] === '.');
 
-		if (pp + 1 < p.length && p[pp + 1] === '*') {
+		if (patternPos + 1 < regexPattern.length && regexPattern[patternPos + 1] === '*') {
 			//most important part of figuring out the wildcard match
 			//since it covers multiple items, we have to keep on search until the pattern is done
-			cache.set(key, dfs(ps, pp + 2) || (match && dfs(ps + 1, pp)));
-			return !!cache.get(key);
+			memo.set(key, dfs(strPos, patternPos + 2) || (match && dfs(strPos + 1, patternPos)));
+			return !!memo.get(key);
 		}
 		if (match) {
-			cache.set(key, dfs(ps + 1, pp + 1));
-			return !!cache.get(key);
+			memo.set(key, dfs(strPos + 1, patternPos + 1));
+			return !!memo.get(key);
 		}
-		cache.set(key, false);
+		memo.set(key, false);
 		return false;
 	}
 	return dfs(0, 0);
