@@ -15,10 +15,10 @@ class MedianFinder {
 		// 1. if the maxHeap is empty or the number is less than the maxHeap's front, enqueue the number in the maxHeap,
 		// 	  else enqueue the number in the minHeap
 		// reason: we want to maintain the maxHeap as the heap with the smaller elements
-		if (this.maxHeap.size() === 0 || num < this.maxHeap.front()) {
-			this.maxHeap.enqueue(num);
-		} else {
+		if (!this.maxHeap.isEmpty() || num >= this.maxHeap.front()) {
 			this.minHeap.enqueue(num);
+		} else {
+			this.maxHeap.enqueue(num);
 		}
 
 		// 2. if the maxHeap has more elements than the minHeap, dequeue the front of the maxHeap and 
@@ -26,10 +26,12 @@ class MedianFinder {
 		// else if the minHeap has more elements than the maxHeap, dequeue the front of the minHeap and
 		// enqueue it in the maxHeap
 		// reason: we want to maintain the size of the maxHeap to be equal to or 1 more than the minHeap
-		if (this.maxHeap.size() > this.minHeap.size() + 1) {
-			this.minHeap.enqueue(this.maxHeap.dequeue());
-		} else if (this.minHeap.size() > this.maxHeap.size()) {
-			this.maxHeap.enqueue(this.minHeap.dequeue());
+		if (Math.abs(this.maxHeap.size() - this.minHeap.size()) > 1) {
+			if (this.maxHeap.size() > this.minHeap.size() + 1) {
+				this.minHeap.enqueue(this.maxHeap.dequeue());
+			} else {
+				this.maxHeap.enqueue(this.minHeap.dequeue());
+			}
 		}
 	}
 
@@ -37,7 +39,9 @@ class MedianFinder {
 		if (this.maxHeap.size() === this.minHeap.size()) {
 			return (this.maxHeap.front() + this.minHeap.front()) / 2;
 		} else {
-			return this.maxHeap.front();
+			const biggerHeap = this.maxHeap.size() > this.minHeap.size() ?
+				this.maxHeap : this.minHeap;
+			return biggerHeap.front();
 		}
 	}
 }
