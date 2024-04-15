@@ -3,7 +3,8 @@
  * This interface is used to define the operations that can be applied to the Fenwick Tree
  * The operations needed be reversible (undo), so that the original value can be restored
  */
-interface ReversableOperator<T> {
+export interface ReversableOperator<T> {
+	firstItem(): T;
 	merge(a: T, b: T): T;
 	exclude(c: T, b: T): T;
 }
@@ -15,7 +16,7 @@ interface ReversableOperator<T> {
  * Note: The index is 1-based
  * 
  */
-class FenwickTree<T> {
+export class FenwickTree<T> {
 	//Space: O(n) - the cloned array storage is just n + 1
 
 
@@ -28,7 +29,7 @@ class FenwickTree<T> {
 		this.reversableAggregator = reversableAggregator;
 
 		//make a copy of the array
-		this.tree = [ar[0], ...ar]; // 1-based index, the first item is not used
+		this.tree = [reversableAggregator.firstItem(), ...ar]; // 1-based index, the first item is not used
 		const size = this.tree.length;
 
 		for (let i = 1; i < size; i++) {
@@ -91,7 +92,7 @@ class FenwickTree<T> {
 		const size = this.tree.length;
 		while (i < size) {
 			this.tree[i] = this.reversableAggregator.merge(this.tree[i], k);
-			i += i & -i;
+			i = this.getParentIndex(i);
 		}
 	}
 
@@ -106,6 +107,7 @@ class FenwickTree<T> {
 const ar = [0, 5, 2, 9, -3, 5, 20, 10, -7, 2, 3, -4, 0, -2, 15, 5];
 
 const o: ReversableOperator<number> = {
+	firstItem: () => 0,
 	merge: (a, b) => a + b,
 	exclude: (c, b) => c - b,
 };
