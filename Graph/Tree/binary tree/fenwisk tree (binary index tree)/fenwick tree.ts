@@ -4,7 +4,7 @@
  * The operations needed be reversible (undo), so that the original value can be restored
  */
 export interface ReversableOperator<T> {
-	firstItem(): T;
+	defaultValue(): T;
 	merge(a: T, b: T): T;
 	exclude(c: T, b: T): T;
 }
@@ -20,7 +20,7 @@ export class FenwickTree<T> {
 	//Space: O(n) - the cloned array storage is just n + 1
 
 
-	private tree: T[];
+	tree: T[];
 	private reversableAggregator: ReversableOperator<T>;
 
 	constructor(ar: T[], reversableAggregator: ReversableOperator<T>) {
@@ -29,7 +29,7 @@ export class FenwickTree<T> {
 		this.reversableAggregator = reversableAggregator;
 
 		//make a copy of the array
-		this.tree = [reversableAggregator.firstItem(), ...ar]; // 1-based index, the first item is not used
+		this.tree = [reversableAggregator.defaultValue(), ...ar]; // 1-based index, the first item is not used
 		const size = this.tree.length;
 
 		for (let i = 1; i < size; i++) {
@@ -51,6 +51,11 @@ export class FenwickTree<T> {
 
 	//query the prefix sum from 1 to i
 	query(i: number): T {
+		//very important to get the first item in the tree
+		//since it needs to be 1 minus 0, so the 0 index must directly return the default value
+		if (i === 0)
+			return this.reversableAggregator.defaultValue();
+
 		//Complexity:
 		//Time: O(log n) - tree traversal is log n		
 		let result: T | undefined = undefined;
@@ -99,7 +104,8 @@ export class FenwickTree<T> {
 	update(i: number, value: T): void {
 		//Time: O(log n) - tree traversal is log n for update too
 		const orig = this.valueAt(i);
-		this.apply(i, this.reversableAggregator.exclude(value, orig));
+		const newVal = this.reversableAggregator.exclude(value, orig);
+		this.apply(i, newVal);
 	}
 }
 
@@ -107,7 +113,7 @@ export class FenwickTree<T> {
 const ar = [0, 5, 2, 9, -3, 5, 20, 10, -7, 2, 3, -4, 0, -2, 15, 5];
 
 const o: ReversableOperator<number> = {
-	firstItem: () => 0,
+	defaultValue: () => 0,
 	merge: (a, b) => a + b,
 	exclude: (c, b) => c - b,
 };
