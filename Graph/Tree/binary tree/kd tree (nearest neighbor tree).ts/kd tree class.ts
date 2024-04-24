@@ -1,4 +1,4 @@
-class KDTree {
+export class KDTree {
 	root: KDNode | null = null;
 	numberOfDimensions: number;
 
@@ -123,7 +123,7 @@ class KDTree {
 	}
 }
 
-class KDNode {
+export class KDNode {
 	left: KDNode | null = null;
 	right: KDNode | null = null;
 	numDims: number;
@@ -157,7 +157,7 @@ class KDNode {
 	}
 }
 
-class KDPoint {
+export class KDPoint {
 	props: number[];
 
 	constructor(props: number[]) {
