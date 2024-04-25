@@ -42,7 +42,7 @@ class KDTreeForPointsInside {
 		const k = 1 - depth & 1; // 0 for x, 1 for y
 		const mid = Math.floor((end + start) / 2);
 
-		// Use an optimized version of quickselect to find the median element
+		// Use an optimized version of quickselect to sort with partitioning
 		//it's much faster than the built-in sort
 		this.quickselect(start, end - 1, mid, k);
 
@@ -64,11 +64,18 @@ class KDTreeForPointsInside {
 	quickselect(start: number, end: number, k: number, axis: number): void {
 		while (start < end) {
 			const pivotIndex = this.partition(start, end, axis);
-			if (k < pivotIndex) {
+
+			//quick select part.
+			//if the pivot index is less than k, we need to search the right side
+			//if the pivot index is greater than k, we need to search the left side
+			if (pivotIndex > k) {
 				end = pivotIndex - 1;
-			} else if (k > pivotIndex) {
+			} else if (pivotIndex < k) {
 				start = pivotIndex + 1;
 			} else {
+				//if the pivot index is equal to k, we found the kth smallest element
+				//all elements to the left of the pivot index are less than the pivot
+				//all elements to the right of the pivot index are greater than the pivot
 				break;
 			}
 		}
