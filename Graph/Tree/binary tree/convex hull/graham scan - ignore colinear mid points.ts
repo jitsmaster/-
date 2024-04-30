@@ -9,6 +9,10 @@ class Point {
 
 function convexHullGrahamScanMinPoints(points: Point[]): Point[] {
 
+	//Complexity: 
+	//Time: O(nlogn) - get min y point, sorting and iterating through the points
+	//Space: O(n) - storing the points in the stack twice
+
 	/**
 	 * Computes the cross product of two vectors (b - a) and (c - a).
 	 * 
