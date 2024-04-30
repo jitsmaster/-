@@ -1,18 +1,19 @@
+import { Point, convexHull, sortByPolarAngle } from "./Graph/Tree/binary tree/convex hull/graham scan - ignore colinear mid points";
+
+// Example usage:
+const points: Point[] = [
+	new Point(0, 3),
+	new Point(2, 2),
+	new Point(1, 1),
+	new Point(2, 1),
+	new Point(3, 0),
+	new Point(0, 0),
+	new Point(3, 3)
+];
+
+const convexHullPoints = convexHull(points);
+console.log(convexHullPoints);
 
 
-const ar = [0, 5, 2, 9, -3, 5, 20, 10, -7, 2, 3, -4, 0, -2, 15, 5];
-
-
-const o: ReversableOperator<number> = {
-	firstItem: () => 0,
-	merge: (a, b) => a + b,
-	exclude: (c, b) => c - b,
-};
-
-const ft = new NumsArray(ar, o);
-
-console.log("value at 3 =", ft.valueAt(3));
-console.log("sum(1, 3) =", ft.queryRange(1, 3));
-
-ft.update(2, 20);
-console.log("sum(1, 3) =", ft.queryRange(1, 3));
+const sortedPoints = sortByPolarAngle(convexHullPoints);
+console.log(sortedPoints);
