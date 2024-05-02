@@ -80,6 +80,7 @@ function kmpSearch(text: string, pattern: string): number[] {
 				// If prefixLength is not zero, update prefixLength to the value
 				// stored in the prefixTable at index prefixLength - 1.
 				prefixLength = prefixTable[prefixLength - 1];
+				// this is very similar to building dp table in dynamic programming
 			} else {
 				// If prefixLength is zero, store zero in the prefixTable at index i
 				// and increment i.
