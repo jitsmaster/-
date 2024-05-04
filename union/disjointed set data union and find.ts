@@ -1,7 +1,7 @@
 /**
  * In a very large set of friends connections, given two user IDs:
- * 1. Can you check if they are friends?
- * 2. What is the size of the largest group of friends? 
+ * 1. Can you check if they are boss and employee in any level of hierarchy?
+ * 2. What is the size of the largest group of employees? 
  * 
  * Data structure: Disjointed Set
  * Example:  1  2  3  4  5  6  7  8 9
@@ -30,6 +30,10 @@ export class DisjoinedSet<T extends IObjectWithId> {
 		this.items = items;
 	}
 
+	areTheyRelated(a: T, b: T): boolean {
+		return this.find(a) === this.find(b);
+	}
+
 	find(a: T): number {
 		let id = a.id;
 		//now let's find the parent of the item
@@ -52,29 +56,29 @@ export class DisjoinedSet<T extends IObjectWithId> {
 		return parent;
 	}
 
-	union(a: T, b: T) {
-		const parentA = this.find(a);
-		const parentB = this.find(b);
+	union(boss: T, employee: T) {
+		const bossA = this.find(boss);
+		const bossB = this.find(employee);
 
-		if (parentA === parentB) {
+		if (bossA === bossB) {
 			return;
 		}
 
 		//this merging step, we will group the smaller group to the larger group
 		//the size of the group is indicated by the negative number in the union array
 		//
-		if (this.unionArray[parentA] < this.unionArray[parentB]) {
+		if (this.unionArray[bossA] < this.unionArray[bossB]) {
 			//increase the size of the group, the smaller group is merged to the larger group
-			this.unionArray[parentA] += this.unionArray[parentB];
-			this.unionArray[parentB] = parentA;
+			this.unionArray[bossA] += this.unionArray[bossB];
+			this.unionArray[bossB] = bossA;
 
-			this.maxGroupId = Math.max(-this.maxGroupId, -this.unionArray[parentA]);
+			this.maxGroupId = Math.max(-this.maxGroupId, -this.unionArray[bossA]);
 		}
 		else {
-			this.unionArray[parentB] += this.unionArray[parentA];
-			this.unionArray[parentA] = parentB;
+			this.unionArray[bossB] += this.unionArray[bossA];
+			this.unionArray[bossA] = bossB;
 
-			this.maxGroupId = Math.max(-this.maxGroupId, -this.unionArray[parentB]);
+			this.maxGroupId = Math.max(-this.maxGroupId, -this.unionArray[bossB]);
 		}
 	}
 
@@ -94,3 +98,28 @@ export class DisjoinedSet<T extends IObjectWithId> {
 			.map(size => -size));
 	}
 }
+
+//usage example:
+// const employees = [
+// 	{ id: 1 },
+// 	{ id: 2 },
+// 	{ id: 3 },
+// 	{ id: 4 },
+// 	{ id: 5 },
+// 	{ id: 6 },
+// 	{ id: 7 },
+// 	{ id: 8 },
+// 	{ id: 9 },
+// ];
+
+// const disjointedSet = new DisjoinedSet(employees);
+
+// disjointedSet.union(employees[0], employees[1]);
+// disjointedSet.union(employees[1], employees[2]);
+// disjointedSet.union(employees[3], employees[4]);
+// disjointedSet.union(employees[5], employees[6]);
+// disjointedSet.union(employees[6], employees[7]);
+// disjointedSet.union(employees[7], employees[8]);
+
+// console.log(disjointedSet.areTheyRelated(employees[0], employees[2])); //true
+// console.log(disjointedSet.areTheyRelated(employees[0], employees[3])); //false
