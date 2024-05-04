@@ -66,7 +66,7 @@ export class DisjoinedSet<T extends IObjectWithId> {
 
 		//this merging step, we will group the smaller group to the larger group
 		//the size of the group is indicated by the negative number in the union array
-		//
+		//Using less then, because the negative number indicates the size of the group
 		if (this.unionArray[bossA] < this.unionArray[bossB]) {
 			//increase the size of the group, the smaller group is merged to the larger group
 			this.unionArray[bossA] += this.unionArray[bossB];

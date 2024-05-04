@@ -1,19 +1,21 @@
-import { Point, convexHull, sortByPolarAngle } from "./Graph/Tree/binary tree/convex hull/graham scan - ignore colinear mid points";
+//test number of provinces, with disjointed set
+// 	}
 
-// Example usage:
-const points: Point[] = [
-	new Point(0, 3),
-	new Point(2, 2),
-	new Point(1, 1),
-	new Point(2, 1),
-	new Point(3, 0),
-	new Point(0, 0),
-	new Point(3, 3)
-];
+import { componentsInGraph } from "./union/components in graph";
 
-const convexHullPoints = convexHull(points);
-console.log(convexHullPoints);
+const input = `1 17
+5 13
+7 12
+5 17
+5 12
+2 17
+1 18
+8 13
+2 15
+5 20`;
 
+const ar = input.split('\n').map(c => c.split(' ').map(c => parseInt(c)));
 
-const sortedPoints = sortByPolarAngle(convexHullPoints);
-console.log(sortedPoints);
+const result = componentsInGraph(ar);
+
+console.log(result);
