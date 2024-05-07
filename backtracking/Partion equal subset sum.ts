@@ -15,6 +15,10 @@ function canPartitionBacktrack(nums: number[]): boolean {
 	//6. then we can find the second subset with sum equal to sum/2
 	//7. if we can find both the subsets, then we can return true
 
+	//Complexity:
+	//Time complexity: O(2^n)
+	//Space complexity: O(n)
+
 	const totalSum = nums.reduce((acc, curr) => acc + curr, 0);
 	if (totalSum % 2 !== 0) {
 		return false;
