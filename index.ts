@@ -1,21 +1,11 @@
 //test number of provinces, with disjointed set
 // 	}
 
-import { componentsInGraph } from "./union/components in graph";
+import { minCostConnectPoints } from "./Graph/Minimum Spanning Tree/Min Cost to Connect All Points - Prim's Algo";
 
-const input = `1 17
-5 13
-7 12
-5 17
-5 12
-2 17
-1 18
-8 13
-2 15
-5 20`;
+const input = [[0, 0], [2, 2], [3, 10], [5, 2], [7, 0]];
 
-const ar = input.split('\n').map(c => c.split(' ').map(c => parseInt(c)));
 
-const result = componentsInGraph(ar);
+const res = minCostConnectPoints(input);
 
-console.log(result);
+console.log(res);
