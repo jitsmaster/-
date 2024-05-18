@@ -113,6 +113,16 @@ function kruskalMST(graph: Edge[], numVertices: number): Edge[] {
 	 * The function continues this process until it has gone through all the edges of the graph, and then it returns the
 	 * mst array, which represents the minimum spanning tree of the graph.
 	 */
+
+	//Complexity:
+	//Time complexity: O(E log E) where E is the number of edges in the graph, log E is the time complexity of sorting the edges, E is for iterating over the edges
+	//Space complexity: O(V + E) where V is the number of vertices and E is the number of edges, for storing the disjoint-set data structure
+
+	//Comparing to Prim's algorithm:
+	//Kruskal's algorithm is more efficient in sparse graphs where E is much less than V^2
+	//Prim's algorithm is more efficient in dense graphs where E is close to V^2
+
+
 	// Sort the edges in non-decreasing order of their weights
 	graph.sort((a, b) => a.weight - b.weight);
 
