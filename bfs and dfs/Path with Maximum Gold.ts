@@ -1,3 +1,18 @@
+/**
+ * In a gold mine grid of size m x n, each cell in this mine has an integer representing the amount of gold in that cell,
+ * 0 if it is empty.
+ * 
+ * Return the maximum amount of gold you can collect under the conditions:
+ * 
+ * - Every time you are located in a cell you will collect all the gold in that cell.
+ * - From your position, you can walk one step to the left, right, up, or down.
+ * - You can't visit the same cell more than once.
+ * - Never visit a cell with 0 gold.
+ * - You can start and stop collecting gold from any position in the grid that has some gold.
+ * 
+ * @param grid 
+ * @returns 
+ */
 function getMaximumGold(grid: number[][]): number {
 	/**
 	 * The provided code snippet is an implementation of the dfs (depth-first search) function. 
@@ -18,6 +33,13 @@ function getMaximumGold(grid: number[][]): number {
 	 * The dfs function is used within the getMaximumGold function to explore all possible paths in the grid and find the maximum amount of gold that can be collected.
 	 */
 	const rows = grid.length, cols = grid[0].length;
+	//instead of using 2 2-dim arrays, we can use this to represent the 4 directions
+	//the way to use is is to use i and 3-i to get the opposite direction
+	//for next row, it's d[i], for next col, it's d[3-i]
+	//e.g. if i = 0, then next row is row + d[0], next col is col + d[3-0] = col + d[3] = col + 0 = col, which is same row to the right
+	//if i = 1, then next row is row + d[1], next col is col + d[3-1] = col + d[2] = col - 1, which is same row to the left
+	//if i = 2, then next row is row + d[2], next col is col + d[3-2] = col + d[1] = col + 1, which is row above
+	//if i = 3, then next row is row + d[3], next col is col + d[3-3] = col + d[0] = col, which is row below
 	const dirs = [1, -1, 0, 0];
 
 	/**
@@ -58,6 +80,16 @@ function getMaximumGold(grid: number[][]): number {
 				//so we don't need to start the dfs from this cell
 				//Note: this is the most important optimization in this solution
 				//DFS is just standard, but reducing the number of starting points is the key
+
+				/**
+				 * But why consider only cells with gold Neighbours 2 or less?
+				 * Any cell with 3 or more neighbouring gold cells will have a greater gold collection if considered by a neighbouring gold cell than starting dfs from it.
+				 * in other words, if a cell has 3 or more neighbouring gold cells, it will be visited by a neighbouring gold cell, 
+				 * so we don't need to start the dfs from this cell.
+				 * 
+				 * Give it a thought, this idea will soon hit you.
+				 * Look at the starting cell for DFS, it will satisfy this optimization. It helps.
+				 */
 				const nr = row + dirs[i], nc = col + dirs[3 - i];
 				if (nr >= 0 && nr < rows && nc >= 0 && nc < cols && grid[nr][nc] !== 0) {
 					++goldNeighbours;
