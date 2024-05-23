@@ -1,26 +1,36 @@
+
+/**
+ * Solves the knapsack problem using tabulation (bottom-up) approach.
+ * 
+ * @param weights - An array of weights of the items.
+ * @param values - An array of values of the items.
+ * @param capacity - The maximum capacity of the knapsack.
+ * @returns The maximum value that can be obtained by selecting items without exceeding the capacity.
+ */
 function knapsackTabulation(weights: number[], values: number[], capacity: number): number {
 	const weightsLength = weights.length;
 
-	// Initialize the dp table, row is the value of item, column is the remaining capacity
-	const dp = Array.from({ length: weightsLength + 1 }, () => Array(capacity + 1).fill(''));
+	// Initialize the dp table, row is the item index, column is the remaining capacity
+	const dp = Array.from({ length: weightsLength + 1 }, () => Array(capacity + 1).fill(0));
 
 	// Fill the dp table
-	for (let i = 1; i <= weightsLength; i++) {
-		for (let j = 1; j <= capacity; j++) {
-			if (weights[i - 1] <= j) {
-				//if the weight of the current item is less than or equal to the remaining capacity
-				//algorithm: max of (current value + value of remaining capacity, value of previous item)
-				dp[i][j] = Math.max(
-					values[i - 1] + dp[i - 1][j - weights[i - 1]],
-					dp[i - 1][j]);
+	for (let row = 1; row <= weightsLength; row++) {
+		for (let col = 1; col <= capacity; col++) {
+			if (weights[row - 1] <= col) {
+				dp[row][col] = Math.max(
+					//previous items's value, plus the value of the previous item under the remaining capacity (col - weights[row - 1])
+					values[row - 1] + dp[row - 1][col - weights[row - 1]],
+					dp[row - 1][col]); //previous item's value under current capacity in dp table
 			} else {
 				//if the weight of the current item is greater than the remaining capacity
-				//just copy from previous item
-				dp[i][j] = dp[i - 1][j];
+				//just copy from previous item, since we can't add the current item due to out of capacity
+				dp[row][col] = dp[row - 1][col];
 			}
 		}
 	}
 
+	//the very last cell in the dp table will have the maximum value
+	//standard DP approach
 	return dp[weightsLength][capacity];
 }
 

@@ -1,14 +1,11 @@
 //test number of provinces, with disjointed set
 // 	}
 
-import { findMinRange } from "./heap and priority queue/k list of sorted integers find the min range";
+import { findTargetSumWays } from "./Dynamic Programming/knapsack/target sum";
 
-const list = [
-	[10, 20, 30],
-	[2, 4, 8, 16],
-	[5, 7, 13, 17]
-];
+const list = [0, 0, 0, 0, 0, 0, 0, 0, 1];
+const tgt = 1;
 
-const minRange = findMinRange(list);
+const num = findTargetSumWays(list, 3);
 
-console.log(minRange); 
+console.log(num); 
