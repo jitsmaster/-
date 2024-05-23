@@ -21,7 +21,7 @@ class DoublyLinkedListNode {
 
 function convertBinaryTreeToDoublyLinkedList(root: TreeNode | null): DoublyLinkedListNode | null {
 	//the whole idea is to flatten the binary tree to a doubly linked list
-	//is to use in order traversal
+	//is to use in-order traversal
 	//which is the left -> root -> right sequence
 	//becausse double linked list node has previous, current and next, this is perfect
 

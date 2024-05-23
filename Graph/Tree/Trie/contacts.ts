@@ -35,10 +35,10 @@ class Trie {
 	 * @returns 
 	 */
 	getWholeWords() {
-		return this.dfsGetWholeWords(this);
+		return this._dfsGetWordsCount(this);
 	}
 
-	dfsGetWholeWords(node: Trie) {
+	private _dfsGetWordsCount(node: Trie) {
 		let wholeWordsCount = 0;
 		if (node.isWordEnd) {
 			wholeWordsCount++;
@@ -46,10 +46,30 @@ class Trie {
 
 		const children = node.children;
 		for (let c of children.values()) {
-			wholeWordsCount += node.dfsGetWholeWords(c);
+			wholeWordsCount += node._dfsGetWordsCount(c);
 		}
 
 		return wholeWordsCount;
+	}
+
+	getWordsCount() {
+		return this._dfsGetWordsCount(this);
+	}
+
+	private _dfsGetAllWords(node: Trie, path: string, words: string[]) {
+		if (node.isWordEnd) {
+			words.push(path);
+		}
+
+		for (let c of node.children.values()) {
+			node._dfsGetAllWords(c, path + c.char, words);
+		}
+	}
+
+	getAllWords() {
+		let words = [] as string[];
+		this._dfsGetAllWords(this, "", words);
+		return words;
 	}
 
 	printTree(path: string) {
@@ -74,7 +94,7 @@ class Trie {
  * @param queries 
  * @returns 
  */
-function findContactsStartsWith(queries: string[][]): number[] {
+function findCountOfContactsStartsWith(queries: string[][]): number[] {
 
 	const namesTree: Trie = new Trie("", false);
 	const roots = namesTree.children;
@@ -107,6 +127,43 @@ function findContactsStartsWith(queries: string[][]): number[] {
 		//we have the code, get get all descendant has word end marked
 		return node?.count || 0;
 
+	}
+
+	return output;
+}
+
+function findContactsStartsWith(queries: string[][]): string[] {
+
+	const namesTree: Trie = new Trie("", false);
+	const roots = namesTree.children;
+	const output: string[] = [];
+
+	for (let [instruction, name] of queries) {
+		if (instruction === "add") {
+			namesTree.add(name)
+		}
+		else if (instruction === "find") {
+			let count = 0;
+			// console.info(`root: ${namesTree.printTree("").join("\r\n")}`)
+			output.push(...getWords(namesTree, name))
+		}
+	}
+
+	function getWords(node: Trie, str: string): string[] {
+		//locate the node chain that matches the search string
+		//last node in the chain will have the count of the whole words
+		while (!!str) {
+			if (!node.children.has(str[0]))
+				return []; //whole string not finding the node, then cannot be found
+
+			node = node.children.get(str[0])!
+			str = str.slice(1)
+		}
+
+		// console.info(`start root found: ${path.join("")}`)
+
+		//we have the code, get get all descendant has word end marked
+		return node?.getAllWords() || [];
 	}
 
 	return output;
