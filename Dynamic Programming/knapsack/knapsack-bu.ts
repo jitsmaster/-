@@ -33,6 +33,7 @@ function knapsackTabulation(weights: number[], values: number[], capacity: numbe
 	}
 
 	let weight = capacity;
+	//now include the selected items too
 
 	const selectedIndexes: number[] = [];
 
