@@ -44,3 +44,27 @@ function hasTwoSum(numbers: number[], target: number): boolean {
 	return false;
 }
 
+//This is the 2 pointers solution, only if the array is sorted
+//Benefit of this approach is that it requires constant space, better than using map or set
+//we can use this approach, because it's SORTED!
+//Note: really important to think of using binary search for any ordered listing
+function twoSumBinarySearch(numbers: number[], target: number): [number, number] | null {
+
+	//Time complexity: O(n) - we iterate through the array once
+	//Space complexity: O(1) - we only store 2 pointers
+	let left = 0;
+	let right = numbers.length - 1;
+
+	while (left < right) {
+		const sum = numbers[left] + numbers[right];
+		if (sum === target) {
+			return [left, right];
+		} else if (sum < target) {
+			left++;
+		} else {
+			right--;
+		}
+	}
+
+	return null;
+}
