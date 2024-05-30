@@ -1,5 +1,13 @@
+/**
+ * Given an array of integers temperatures represents the daily temperatures,
+ * return an array answer such that answer[i] is the number of days you have to wait
+ * after the ith day to get a warmer temperature. If there is no future day for which
+ * this is possible, keep answer[i] == 0 instead.
+ * @param temperatures 
+ * @returns 
+ */
 function dailyTemperatures(temperatures: number[]): number[] {
-	//This is a monotonic stack problem
+	//Analysis: This is a monotonic stack problem
 	//The stack will be stricting decreasing or equal
 	//When increase is found, we will pop the stack until the stack is empty or the top of the stack is no less than the current element.
 	//For popped elements, we will calculate the difference between the current index and the index of the popped element.
