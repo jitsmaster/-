@@ -41,6 +41,7 @@ function characterReplacement(s: string, k: number): number {
 			left++;
 		}
 
+		//reculate the max length of the substring
 		out = Math.max((right - left) + 1, out);
 	}
 
