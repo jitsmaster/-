@@ -32,6 +32,10 @@ class ListNode {
  Do not return anything, modify head in-place instead.
  */
 function reorderList(head: ListNode | null): void {
+	//Complexity:
+	//Time: O(n) - 3 loops, 1 to find the middle, 1 to reverse, 1 to merge
+	//Space: O(1) - constant space with 4 pointers
+
 	//Analysis:
 	//The approach is to cut the list in half, reverse the 2nd half, and merge the 2 halves
 	//Import part is to cut off the end of the first half, otherwise the 2 halves will be overlapping at some point, causing circular linked list
