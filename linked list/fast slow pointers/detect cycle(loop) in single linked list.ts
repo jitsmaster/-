@@ -1,6 +1,6 @@
-import type { LinkedListNode } from "../../copy(clone) linked list with arbitrary pointer";
+import type { _Node } from "../copy(clone) linked list with arbitrary pointer";
 
-function hasCycle(head: LinkedListNode | null): boolean {
+function hasCycle(head: _Node | null): boolean {
 	//Complexity:
 	//Time: O(n) - we are traversing the list once
 	//Space: O(1) - constant space with 2 variables
