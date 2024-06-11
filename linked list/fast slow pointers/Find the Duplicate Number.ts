@@ -98,17 +98,19 @@ function findDuplicateFast(nums: number[]): number {
 	//if the value is visisted, mark it as negative
 	//if the value is negative, it's a duplicate
 	for (let num of nums) {
+		const nextIndex = Math.abs(num);
 		// Get the value at the current index
-		let val = nums[Math.abs(num)];
+		let nextVal = nums[nextIndex];
 
 		// Check if the value is positive
-		if (val > 0)
+		if (nextVal > 0)
 			// If positive, mark it as visited by negating it
 			//this both maintain the next pointer (Math.abs), and mark it as visited
-			nums[Math.abs(num)] = -nums[Math.abs(num)];
+			nums[nextIndex] = -nextVal;
 		else
 			// If negative, it means we have already visited this number before, so it's a duplicate
-			return Math.abs(num);
+			// return the positive value of current val, which is also the next index
+			return nextIndex;
 	}
 
 	// If no duplicate is found, return -1
