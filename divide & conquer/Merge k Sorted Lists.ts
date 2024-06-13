@@ -47,6 +47,11 @@ class ListNode {
 }
 
 function mergeKLists(lists: Array<ListNode | null>): ListNode | null {
+	//Complexity:
+	//Time: O(n log k), n is the total number of nodes in all lists, k is the number of lists, 
+	//  n for each pair to merge, since it's iterating through all nodes, log k for the divide and conquer
+	//Space: O(log k), for the recursion stack, for both approaches
+
 	//we will use a divide and conquer approach to merge the linked lists
 	//we divide the list into 2 chunks and merge them
 	//while keep on dividing and merging until we have only one list left
@@ -61,7 +66,12 @@ function mergeKLists(lists: Array<ListNode | null>): ListNode | null {
 	if (!lists || !lists.length)
 		return null;
 
+	//this is faster, but recursive
 	return divideAndMerge(lists, 0, lists.length - 1);
+
+	//this way is slower, since it needs to iterate through 2 stacks twice, but it's not recursive and easy to understand
+	// return divideAndMerge(lists);
+
 
 	function divideAndMerge(listsArr: Array<ListNode | null>, start: number, end: number): ListNode | null {
 		if (start === end) {
@@ -73,6 +83,42 @@ function mergeKLists(lists: Array<ListNode | null>): ListNode | null {
 		const right = divideAndMerge(listsArr, mid + 1, end);
 
 		return merge2SortedLinkedList(left, right);
+	}
+
+	function divideAndMergeIterative(listsArr: Array<ListNode | null>): ListNode | null {
+		const stackQueue: [number, number][] = [];
+		const stackAction: [number, number][] = [];
+
+		let mid = (0 + listsArr.length - 1) >> 1;
+		stackQueue.push([0, mid + 1]);
+
+		//push all divides up front, so we can start at the finest level
+		while (stackQueue.length) {
+			const [start, end] = stackQueue[stackQueue.length - 1]!;
+
+			if (start === end) {
+				continue;
+			}
+
+			const mid = (start + end) >> 1;
+			//IMPORTANT: do not push start and end as a pair, instead, start and mid + 1
+			//since the merged value will always be at the left side.
+			stackAction.push([start, mid + 1]);
+
+			stackQueue.push([start, mid]);
+			stackQueue.push([mid + 1, end]);
+		}
+
+		//now we start merging from the finest level
+		while (stackAction.length) {
+			const [start, end] = stackQueue.pop()!;
+			const left = listsArr[start];
+			const right = listsArr[end];
+
+			listsArr[start] = merge2SortedLinkedList(left, right);
+		}
+
+		return listsArr[0];
 	}
 
 
