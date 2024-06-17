@@ -23,19 +23,24 @@ The number of nodes in the tree is in the range [1, 104].
 -100 <= Node.val <= 100
  */
 
-class TreeNode {
-	val: number
-	left: TreeNode | null
-	right: TreeNode | null
-	constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
-		this.val = (val === undefined ? 0 : val)
-		this.left = (left === undefined ? null : left)
-		this.right = (right === undefined ? null : right)
-	}
-}
+import type { TreeNode } from "../bfs and dfs/Breadth-first-search";
+
 
 //IMPORTANT: This cannot use BFS, since the diameter is alway deep down first, BFS makes no sense here
 function diameterOfBinaryTree(root: TreeNode | null): number {
+	//Analysis:
+	//The diameter of a binary tree is the length of the longest path between any two nodes in a tree.
+	//This path may or may not pass through the root.
+	//The length of a path between two nodes is represented by the number of edges between them.
+	//So, we can calculate the depth of the left and right subtree, recursively
+	//The diameter is always left + right, since it's the longest path between any two nodes in the tree
+	//We can keep track of the diameter and update it as we go
+	//We can use DFS to calculate the depth of the left and right subtree, recursively
+	//We can use a global variable to keep track of the diameter
+
+	//Complexity:
+	//Time: O(n), n is the number of nodes in the tree, since we are visiting each node once
+	//Space: O(h), for the recursion stack, since the depth of the recursion stack is the height of the tree
 	let diameter = 0;
 
 	function getDepthDFS(node: TreeNode | null): number {
