@@ -1,0 +1,2 @@
+1. Format jsdoc from:
+break lines at 150 characters or less, and make sure every line has * in front
