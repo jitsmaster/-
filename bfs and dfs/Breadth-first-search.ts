@@ -1,10 +1,10 @@
 export class TreeNode {
-	value: number;
+	val: number;
 	left: TreeNode | null;
 	right: TreeNode | null;
 
 	constructor(value: number) {
-		this.value = value;
+		this.val = value;
 		this.left = null;
 		this.right = null;
 	}
@@ -39,7 +39,7 @@ function breadthFirstSearchWithLevelGrouping(root: TreeNode | null): number[][] 
 		if (!result[level]) {
 			result[level] = [];
 		}
-		result[level].push(node.value);
+		result[level].push(node.val);
 
 		//push next level nodes to the queue, with level incremented
 		if (!!node.left) {
@@ -72,7 +72,7 @@ function breadthFirstSearchWithLevelGroupingWithoutSpecialClass(root: TreeNode |
 		if (!result[level]) {
 			result[level] = [];
 		}
-		result[level].push(node.value);
+		result[level].push(node.val);
 
 		//push next level nodes to the queue, with level incremented
 		if (!!node.left) {

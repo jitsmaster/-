@@ -1,4 +1,4 @@
-import type { TreeNode } from "../bfs and dfs/Breadth-first-search";
+import type { TreeNode } from "../../../bfs and dfs/Breadth-first-search";
 
 /**
  * Given the roots of two binary trees p and q, write a function to check if they are the same or not.
@@ -42,7 +42,7 @@ function isSameTree(p: TreeNode | null, q: TreeNode | null): boolean {
 	//IMPORTANT: must have a stopping point to prevent infinite recursion, in this case, if both nodes are null, return true
 	if (!p && !q) return true;
 	//if one of the nodes is null, return false
-	if (p && q && p.value === q.value)
+	if (p && q && p.val === q.val)
 		//recursively check the left and right children
 		return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
 

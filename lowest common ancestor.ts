@@ -23,7 +23,7 @@ function lowestCommonAncestorOfBinarySearchTree(root: TreeNode | null, p: TreeNo
 	while (node) {
 		//if the node value of between the small and large value, then it is the a lowest common ancestor
 		//return the node
-		if (node.val >= smallVal && node.val <= largeVal) 
+		if (node.val >= smallVal && node.val <= largeVal)
 			return node;
 		//if the node value is less than the small value and large value, then we start searching
 		//from the right side of the tree
@@ -43,18 +43,18 @@ function lowestCommonAncestorOfBinarySearchTree(root: TreeNode | null, p: TreeNo
 
 function lowestCommonAncestorOfBinaryTree(root: TreeNode | null, p: TreeNode, q: TreeNode): TreeNode | null {
 	//Time complexity: O(n) - we are traversing the tree once
-	//Space complexity: O(n) - the call stack can go as deep as the height of the tree
+	//Space complexity: O(h) - the call stack can go as deep as the height of the tree
 
 	//It's not a binary search tree, so we can't use the value of the nodes to determine the lowest common ancestor
 	//We have to traverse the tree to find the lowest common ancestor
 	//We can use a recursive approach to traverse the tree
 
 	//if we reach the end of the tree, return null
-	if (!root) 
+	if (!root)
 		return null;
 
 	//if we find either of the nodes, return the node
-	if (root === p || root === q) 
+	if (root === p || root === q)
 		return root;
 
 	//search the left side of the tree
@@ -63,7 +63,7 @@ function lowestCommonAncestorOfBinaryTree(root: TreeNode | null, p: TreeNode, q:
 	const right = lowestCommonAncestorOfBinaryTree(root.right, p, q);
 
 	//if we find both nodes, then the current node is the lowest common ancestor
-	if (left && right) 
+	if (left && right)
 		return root;
 
 	//if we find only one of the nodes, then return that node

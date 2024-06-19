@@ -12,7 +12,7 @@ function checkIfBinaryTreeIsBinarySearchTree(root: TreeNode | null): boolean {
 			return;
 
 		inOrderTraversal(node.left);
-		res.push(node.value);
+		res.push(node.val);
 		inOrderTraversal(node.right);
 	}
 

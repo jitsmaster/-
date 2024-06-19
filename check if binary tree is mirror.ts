@@ -12,7 +12,7 @@ function isSymmetric(root: TreeNode | null): boolean {
 			return false;
 
 		//mirror logic, value equals, and left is mirror of right, and right is mirror of left
-		return n1.value === n2.value && isMirror(n1.left, n2.right)
+		return n1.val === n2.val && isMirror(n1.left, n2.right)
 			&& isMirror(n1.right, n2.left);
 	}
 
@@ -31,7 +31,7 @@ function isSymmetricInOrderTraversal(root: TreeNode | null): boolean {
 
 		//step 1: traverse the left subtree of node recursively
 		inOrderTraversal(node.left);
-		inOrderResultLeftToRight.push(node.value);
+		inOrderResultLeftToRight.push(node.val);
 		//step 2: visit the node itself, do what is needed to be done, like creating a doubly linked list node, or push the node value to an array
 		//step 3: traverse the right subtree of node recursively
 		inOrderTraversal(node.right);
@@ -44,7 +44,7 @@ function isSymmetricInOrderTraversal(root: TreeNode | null): boolean {
 
 		//step 1: traverse the left subtree of node recursively
 		inOrderTraversalReverse(node.right);
-		inOrderResultRightToLeft.push(node.value);
+		inOrderResultRightToLeft.push(node.val);
 		//step 2: visit the node itself, do what is needed to be done, like creating a doubly linked list node, or push the node value to an array
 		//step 3: traverse the right subtree of node recursively
 		inOrderTraversalReverse(node.left);
