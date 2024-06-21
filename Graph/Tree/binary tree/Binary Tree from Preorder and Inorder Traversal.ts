@@ -26,6 +26,10 @@
 import { TreeNode } from "../../../bfs and dfs/Breadth-first-search";
 
 function buildTree(preorder: number[], inorder: number[]): TreeNode | null {
+	//Complexity:
+	//Time: O(n), since we are using a map to store the inorder array to achieve O(1) lookup, and we are visiting each node once
+	//Space: O(n), since we are using a map to store the inorder array, and we are using recursion to build the tree
+
 	//generate a map of inorder array
 	//value as key and index as value
 	//this will make lookup much faster
