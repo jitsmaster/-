@@ -1,11 +1,10 @@
 //test number of provinces, with disjointed set
 // 	}
 
-import { findTargetSumWays } from "./Dynamic Programming/knapsack/target sum";
+import { numIslands } from "./bfs and dfs/Number of Islands";
 
-const list = [0, 0, 0, 0, 0, 0, 0, 0, 1];
-const tgt = 1;
+const input = [["1", "1", "0", "0", "0"], ["1", "1", "0", "0", "0"], ["0", "0", "1", "0", "0"], ["0", "0", "0", "1", "1"]];
 
-const num = findTargetSumWays(list, 3);
+const output = numIslands(input);
 
-console.log(num); 
+console.log(output)
