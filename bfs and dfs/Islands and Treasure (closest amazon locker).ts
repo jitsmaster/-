@@ -64,44 +64,53 @@ export function islandsAndTreasure(grid: number[][]) {
 		}
 	}
 
-	function dfs(r: number, c: number, chest: [number, number], distance: number) {
+	function bfs(row: number, col: number, chest: [number, number]) {
 		//stop when out of bound, or reaching water or another chest
 		//can traversed already from the same chest
-		if (r < 0 || r >= grid.length
-			|| c < 0 || c >= grid[0].length
-			|| (distance > -1 && grid[r][c] <= 0))
-			return;
+		//have to use bfs, otherwise, a deeper cell might be traversed first, and the distance will be wrong
+		const queue: [number, number][] = [[row, col]];
 
-		const chestHash = chest[0] * grid.length + chest[1]; //formula: row * rowsCount + column
+		let distance = 0;
 
-		//use XOR to figure out if the cell was visited by dfs from this chest already
-		//any number XOR with itself is 0, so the OR'ed number with the chest hash will be 0, if the cell was visited
-		//by this chest already
-		//using XOR to check if the cell was visited by this chest already
-		//if visited, return
-		//make sure distance is greater than 0, to avoid setting the chest as visited
-		const visitedByThisChest = visited[r][c].has(chestHash);
+		while (queue.length > 0) {
+			const l = queue.length;
+			//inner loop to go through the same level
+			for (let i = 0; i < l; i++) {
+				const [r, c] = queue.shift()!;
 
-		if (visitedByThisChest)
-			return;
+				if (r < 0 || r >= grid.length
+					|| c < 0 || c >= grid[0].length
+					|| (distance > 0 && grid[r][c] <= 0))
+					continue;
 
-		const newDistance = distance + 1;
-		grid[r][c] = Math.min(grid[r][c], newDistance); //increment distance to this chest, if smaller, set on cell
+				const chestHash = chest[0] * grid[0].length + chest[1]; //formula: row * columnCount + column
 
-		//set on visited for this cell, using XOR to add the chest hash to the visited
-		visited[r][c].add(chestHash);
+				const visitedByThisChest = visited[r][c].has(chestHash);
 
-		dfs(r, c - 1, chest, newDistance);
-		dfs(r, c + 1, chest, newDistance);
-		dfs(r - 1, c, chest, newDistance);
-		dfs(r + 1, c, chest, newDistance);
+				if (visitedByThisChest)
+					continue;
+
+				grid[r][c] = Math.min(grid[r][c], distance); //increment distance to this chest, if smaller, set on cell
+
+				//set on visited for this cell, using XOR to add the chest hash to the visited
+				visited[r][c].add(chestHash);
+
+				//add to queue for next round
+				queue.push([r + 1, c]);
+				queue.push([r - 1, c]);
+				queue.push([r, c + 1]);
+				queue.push([r, c - 1]);
+			}
+
+			distance++;
+		}
 	}
 
 	//now starting from all chest coords
 	for (let r = 0; r < grid.length; r++) {
 		for (let c = 0; c < grid[0].length; c++) {
 			if (grid[r][c] === 0) {
-				dfs(r, c, [r, c], -1);
+				bfs(r, c, [r, c]);
 			}
 		}
 	}

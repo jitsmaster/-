@@ -3,28 +3,19 @@
 
 import { islandsAndTreasure } from "./bfs and dfs/Islands and Treasure (closest amazon locker)";
 
-const input = [
-	[2147483647, -1, 0, 2147483647],
-	[2147483647, 2147483647, 2147483647, -1],
-	[2147483647, -1, 2147483647, -1],
-	[0, -1, 2147483647, 2147483647]
-]
+const grid = [[2147483647, 2147483647, 2147483647], [2147483647, -1, 2147483647], [0, 2147483647, 2147483647]]
 
-const expected = [
-	[3, -1, 0, 1],
-	[2, 2, 1, -1],
-	[1, -1, 2, -1],
-	[0, -1, 3, 4]
-]
+
+const expected = [[2, 3, 4], [1, -1, 3], [0, 1, 2]]
 
 
 
-islandsAndTreasure(input);
+islandsAndTreasure(grid);
 
-if (JSON.stringify(input) !== JSON.stringify(expected)) {
+if (JSON.stringify(grid) !== JSON.stringify(expected)) {
 	console.error("Wrong: ")
 	console.error(`Expected: ${JSON.stringify(expected)}`)
-	console.error(`Actual: ${JSON.stringify(input)}`)
+	console.error(`Actual: ${JSON.stringify(grid)}`)
 }
 else {
 	console.log("Success!")
