@@ -1,22 +1,18 @@
 //test number of provinces, with disjointed set
 // 	}
 
-import { islandsAndTreasure } from "./bfs and dfs/Islands and Treasure (closest amazon locker)";
+import { orangesRotting } from "./bfs and dfs/Rotting Oranges";
 
-const grid = [[2147483647, 2147483647, 2147483647], [2147483647, -1, 2147483647], [0, 2147483647, 2147483647]]
-
-
-const expected = [[2, 3, 4], [1, -1, 3], [0, 1, 2]]
+const grid = [[1], [2], [1], [2]]
 
 
+const expected = 1
 
-islandsAndTreasure(grid);
 
-if (JSON.stringify(grid) !== JSON.stringify(expected)) {
-	console.error("Wrong: ")
-	console.error(`Expected: ${JSON.stringify(expected)}`)
-	console.error(`Actual: ${JSON.stringify(grid)}`)
-}
-else {
-	console.log("Success!")
-}
+
+const output = orangesRotting(grid);
+
+if (expected !== output)
+	console.log(`${output} != ${expected}`)
+else
+	console.log("Success!!!")
