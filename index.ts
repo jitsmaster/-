@@ -1,18 +1,20 @@
 //test number of provinces, with disjointed set
 // 	}
 
-import { orangesRotting } from "./bfs and dfs/Rotting Oranges";
-
-const grid = [[1], [2], [1], [2]]
+import { solve } from "./bfs and dfs/Surrounded Regions";
 
 
-const expected = 1
+const grid = [["O", "O", "O", "O", "X", "X"], ["O", "O", "O", "O", "O", "O"], ["O", "X", "O", "X", "O", "O"], ["O", "X", "O", "O", "X", "O"], ["O", "X", "O", "X", "O", "O"], ["O", "X", "O", "O", "O", "O"]]
 
 
+const expected = [["O", "O", "O", "O", "X", "X"], ["O", "O", "O", "O", "O", "O"], ["O", "X", "O", "X", "O", "O"], ["O", "X", "O", "O", "X", "O"], ["O", "X", "O", "X", "O", "O"], ["O", "X", "O", "O", "O", "O"]];
 
-const output = orangesRotting(grid);
 
-if (expected !== output)
-	console.log(`${output} != ${expected}`)
+solve(grid);
+
+if (!expected.every((row, i) =>
+	row.every((cell, j) =>
+		cell === grid[i][j])))
+	console.log(`${grid} != ${expected}`)
 else
 	console.log("Success!!!")
