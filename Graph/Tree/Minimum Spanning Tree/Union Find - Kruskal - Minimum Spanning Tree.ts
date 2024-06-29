@@ -20,64 +20,8 @@
  * The constructor of the UnionFind class takes the size of the disjoint-set forest as a parameter.
  * It initializes the parent array with all elements set to -1, indicating that each vertex is initially a root and belongs to its own connected component.
  */
-class UnionFind {
-	parent: number[];
 
-	constructor(size: number) {
-		this.parent = new Array(size).fill(-1);
-	}
-
-	/**
-	 * Finds the root of the connected component that the given vertex belongs to.
-	 * Uses path compression to optimize the find operation.
-	 *
-	 * @param x The vertex to find the root for.
-	 * @returns The root of the connected component that the vertex belongs to.
-	 */
-	find(x: number): number {
-		//if the vertex is a root, return it, which means the this.parent[x] is -1
-		if (this.parent[x] < 0) {
-			return x;
-		}
-
-		//otherwise, find the root of the parent of the vertex
-		//recursively, and update the parent of the vertex to the root
-		return this.parent[x] = this.find(this.parent[x]);
-	}
-
-	/**
-	 * Merges the connected components that the given vertices belong to.
-	 * Uses the union-by-rank heuristic to optimize the union operation.
-	 *
-	 * @param x The first vertex.
-	 * @param y The second vertex.
-	 */
-	union(x: number, y: number): void {
-		//find the roots of the connected components that x and y belong to
-		let rootX = this.find(x);
-		let rootY = this.find(y);
-
-		//if they belong to the same root, they are already in the same connected component
-		if (rootX === rootY) {
-			return;
-		}
-
-		//union by rank heuristic, merge the smaller tree to the larger tree
-		//this step is to find out which tree is larger
-		//by comparing the size of the rootX and rootY
-		//if the size of the rootX is larger, then swap the rootX and rootY
-		if (this.parent[rootX] > this.parent[rootY]) {
-			[rootX, rootY] = [rootY, rootX];
-		}
-
-		//union happens, merge the smaller tree to the larger tree
-		//since we already made sure that the larger tree is at rootX
-		//we can just add the size of the smaller tree to the larger tree
-		//and update the parent of the smaller tree to the root of the larger tree
-		this.parent[rootX] += this.parent[rootY];
-		this.parent[rootY] = rootX;
-	}
-}
+import { DisjointSet } from "../../../bfs and dfs/topo sort/Count Connected Components";
 
 class Edge {
 	source: number;
@@ -92,6 +36,10 @@ class Edge {
 }
 
 function kruskalMST(graph: Edge[], numVertices: number): Edge[] {
+	/**
+	 * Concept: the minimum spanning tree (MST) of a graph is a tree that connects all the vertices in the graph with the minimum 
+	 * possible total edge weight.
+	 */
 	/**
 	 * Kruskal's algorithm is a greedy algorithm that finds a minimum spanning tree for a connected weighted graph.
 	 * This means it finds a subset of the edges that forms a tree that includes every vertex, where the total weight
@@ -115,7 +63,10 @@ function kruskalMST(graph: Edge[], numVertices: number): Edge[] {
 	 */
 
 	//Complexity:
-	//Time complexity: O(E log E) where E is the number of edges in the graph, log E is the time complexity of sorting the edges, E is for iterating over the edges
+	//Time complexity: O(E log E) where E is the number of edges in the graph, 
+	//log E is the time complexity of sorting the edges, E is for iterating over the edges, note it's slightly worse than
+	//O(E lg* E) where lg* is the iterated logarithm function, which is the number of times the logarithm function 
+	//must be applied before the result is less than or equal to 1
 	//Space complexity: O(V + E) where V is the number of vertices and E is the number of edges, for storing the disjoint-set data structure
 
 	//Comparing to Prim's algorithm:
@@ -127,13 +78,15 @@ function kruskalMST(graph: Edge[], numVertices: number): Edge[] {
 	graph.sort((a, b) => a.weight - b.weight);
 
 	const mst: Edge[] = [];
-	const unionFind = new UnionFind(numVertices);
+	const unionFind = new DisjointSet(numVertices);
 
 	for (const edge of graph) {
 		const rootX = unionFind.find(edge.source);
 		const rootY = unionFind.find(edge.destination);
 
 		if (rootX !== rootY) {
+			// The edge doesn't form a cycle, so add it to the MST
+			// and merge the connected components, if they are connected
 			mst.push(edge);
 			unionFind.union(rootX, rootY);
 		}

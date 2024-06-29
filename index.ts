@@ -1,15 +1,17 @@
 //test number of provinces, with disjointed set
 // 	}
 
-import { validTree } from "./bfs and dfs/Valid Tree";
+import { countComponents } from "./bfs and dfs/topo sort/Count Connected Components";
 
 
-let n = 5
-let edges = [[0, 1], [2, 0], [3, 0], [1, 4]]
+
+let n = 6
+let edges = [[0, 1], [1, 2], [2, 3], [4, 5]]
 
 
-const expected = true;
-const output = validTree(n, edges);
+
+const expected = 2;
+const output = countComponents(n, edges);
 
 if (output !== expected)
 	console.error(`Output: ${output}, Expected: ${expected}`);
