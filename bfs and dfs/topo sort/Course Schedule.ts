@@ -1,23 +1,48 @@
 /**
  * There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1.
- * You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first 
- * if you want to take course ai.
+ * You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.
+ * 
  * For example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.
+ * 
  * Return true if you can finish all courses. Otherwise, return false.
+ * 
+ * Example 1:
+ * 
+ * Input: numCourses = 2, prerequisites = [[1,0]]
+ * Output: true
+ * Explanation: There are a total of 2 courses to take. 
+ * To take course 1 you should have finished course 0. So it is possible.
+ * 
+ * Example 2:
+ * 
+ * Input: numCourses = 2, prerequisites = [[1,0],[0,1]]
+ * Output: false
+ * Explanation: There are a total of 2 courses to take. 
+ * To take course 1 you should have finished course 0, and to take course 0 you should also have finished course 1. So it is impossible.
+ * 
+ * Constraints:
+ * 
+ * 1 <= numCourses <= 2000
+ * 0 <= prerequisites.length <= 5000
+ * prerequisites[i].length == 2
+ * 0 <= ai, bi < numCourses
+ * All the pairs prerequisites[i] are unique.
+ * 
  * @param numCourses 
  * @param prerequisites 
  * @returns 
  */
 function canFinish(numCourses: number, prerequisites: number[][]): boolean {
 	// Algorithm:
-	// 1. Create a graph and in-degree map
-	// 2. Build the graph and in-degree map based on the prerequisites
-	// 3. Add the courses with 0 in-degree to the queue
-	// 4. While the queue is not empty, dequeue the course and increment the count
-	// 5. For each neighbor of the course, decrement the in-degree by 1
-	// 6. If the in-degree of the neighbor becomes 0, add it to the queue
-	// 7. Repeat the process until the queue is empty
-	// 8. If the count is equal to the number of courses, return true, else return false
+	// 1. Create a map, by prereq, each prereq will have a list of courses that depend on it
+	// 3. Create a in-degree map, each course will have the count of courses this course depends on
+	//    in-degree is the number of edges that are coming into a node
+	// 4. Once all items are added to the maps, find the courses from indegree map that have 0 in-degree (no prerequisites)
+	// 5. Add these courses to the queue
+	// 6. When going over children of the course, decrement the in-degree of each child by 1, because this path is traversed
+	// 7. If the in-degree of the child becomes 0, add it to the queue, that means we can take this course now, since all its prerequisites are done
+	// 8. Repeat the process until the queue is empty
+	// 9. If the count of courses taken is equal to the number of courses, return true, else return false
 
 	//Complexity:
 	//Time: O(V + E) - we are iterating through the vertices and edges
@@ -26,10 +51,12 @@ function canFinish(numCourses: number, prerequisites: number[][]): boolean {
 	// Create a graph
 	// The graph is represented as an adjacency list (map)
 	// The key is the course and the value is the list of courses that are dependent on the key course
+
 	const graph = new Map<number, number[]>();
+
 	// Create an in-degree map
 	// The key is the course and the value is the number of courses that are dependent on the key course
-	//note: in-degree is the number of edges that are coming into a node
+	// Note: in-degree is the number of edges that are coming into a node
 	const inDegree = new Map<number, number>();
 
 	// Initialize the graph and in-degree map for each entry corresponding to the number of courses
@@ -54,7 +81,7 @@ function canFinish(numCourses: number, prerequisites: number[][]): boolean {
 		}
 	});
 
-	//note the queue system is very much like bfs
+	//use bfs, since we can start with multiple nodes in queue
 	//have queue inited, and repeat to add more items to the queue
 	//and dequeue the items next round
 	//until the queue is empty
@@ -74,6 +101,8 @@ function canFinish(numCourses: number, prerequisites: number[][]): boolean {
 
 			// if the in-degree of the neighbor becomes 0, add it to the queue
 			// reason: we can take this course now since all its prerequisites are done
+			// Note: this also helps bypassing the circular dependencies, with circular dependencies, the in-degree will never be 0
+			// since the course will always have a dependency
 			if (inDegree.get(neighbor)! === 0) {
 				queue.push(neighbor);
 			}
