@@ -1,20 +1,17 @@
 //test number of provinces, with disjointed set
 // 	}
 
-import { solve } from "./bfs and dfs/Surrounded Regions";
+import { validTree } from "./bfs and dfs/Valid Tree";
 
 
-const grid = [["O", "O", "O", "O", "X", "X"], ["O", "O", "O", "O", "O", "O"], ["O", "X", "O", "X", "O", "O"], ["O", "X", "O", "O", "X", "O"], ["O", "X", "O", "X", "O", "O"], ["O", "X", "O", "O", "O", "O"]]
+let n = 5
+let edges = [[0, 1], [2, 0], [3, 0], [1, 4]]
 
 
-const expected = [["O", "O", "O", "O", "X", "X"], ["O", "O", "O", "O", "O", "O"], ["O", "X", "O", "X", "O", "O"], ["O", "X", "O", "O", "X", "O"], ["O", "X", "O", "X", "O", "O"], ["O", "X", "O", "O", "O", "O"]];
+const expected = true;
+const output = validTree(n, edges);
 
-
-solve(grid);
-
-if (!expected.every((row, i) =>
-	row.every((cell, j) =>
-		cell === grid[i][j])))
-	console.log(`${grid} != ${expected}`)
+if (output !== expected)
+	console.error(`Output: ${output}, Expected: ${expected}`);
 else
 	console.log("Success!!!")
