@@ -31,7 +31,7 @@
  * 0 <= edges.length <= n * (n - 1) / 2
  */
 
-export function validTree(nodeCount: number, edges: number[][]) {
+function validTree(nodeCount: number, edges: number[][]) {
 	// Algorithm:
 	// A valid tree has the following properties:
 	// 1. The number of edges is exactly one less than the number of nodes
