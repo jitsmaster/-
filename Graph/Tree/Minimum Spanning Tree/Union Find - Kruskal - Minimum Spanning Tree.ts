@@ -21,7 +21,7 @@
  * It initializes the parent array with all elements set to -1, indicating that each vertex is initially a root and belongs to its own connected component.
  */
 
-import { DisjointSet } from "../../../bfs and dfs/topo sort/Count Connected Components";
+import { DisjointSet } from "../../../bfs and dfs/union find/Count Connected Components";
 
 class Edge {
 	source: number;

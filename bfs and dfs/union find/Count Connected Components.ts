@@ -81,9 +81,12 @@ export class DisjointSet {
 	 */
 	find(n: number): number {
 		const val = this._linkTable[n]
+
+		//if the value of the node is negative, it's a root node, or possible not yet connected not, only root nodes has negative value
 		if (val < 0)
 			return n;
 
+		//if not root, find the root of the parent node recursively
 		this._linkTable[n] = this.find(val);
 		return this._linkTable[n];
 	}

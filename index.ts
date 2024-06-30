@@ -1,7 +1,7 @@
 //test number of provinces, with disjointed set
 // 	}
 
-import { countComponents } from "./bfs and dfs/topo sort/Count Connected Components";
+import { countComponents } from "./bfs and dfs/union find/Count Connected Components";
 
 
 
