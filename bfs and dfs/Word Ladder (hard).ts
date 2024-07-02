@@ -45,7 +45,7 @@
  * This function assumes that all words in the `wordList` are of the same length.
  * 
  * @complexity
- * The time complexity of this function is O(n * m + h), where n is the number of words, m is the length of each word,
+ * The time complexity of this function is O(n * m), where n is the number of words, m is the length of each word,
  * and h is the number of words in the shortest ladder. This is because we need to build the mask graph, which takes O(n * m) time,
  * and then perform BFS on the graph, which takes O(h) time. The space complexity is O(n * m) for the maskGraph map.
  */
@@ -57,7 +57,7 @@ function ladderLength(beginWord: string, endWord: string, wordList: string[]): n
 	//4. We can use a set to store visited words to prevent going back to the parent word, causing stackoverflow
 
 	//Complexity:
-	//Time complexity: O(n * m + h) where n is the number of words and m is the length of each word, since we need to build the mask graph, and then do BFS on the graph
+	//Time complexity: O(n * m) where n is the number of words and m is the length of each word, since we need to build the mask graph, and then do BFS on the graph
 	//Space complexity: O(n * m) for the maskGraph map, each word will have m masks, and each mask will have a list of words, that could potentially be all words
 
 	if (wordList.indexOf(endWord) < 0)
