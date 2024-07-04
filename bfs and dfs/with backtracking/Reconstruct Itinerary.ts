@@ -59,23 +59,24 @@ export function findItinerary(tickets: string[][]): string[] {
 	/**
 	 * Performs a depth-first search (DFS) traversal starting from the given node.
 	 *
-	 * @param p - The starting node for the DFS traversal.
+	 * @param departure - The starting node for the DFS traversal.
 	 */
-	function dfs(p: string) {
-		const children = graph.get(p) || [];
+	function dfs(departure: string) {
+		const destinations = graph.get(departure) || [];
 
 		// we are doing DFS recursion before ever adding the node to the flight plan
 		// this is more efficient backtracking quite a bit
 		// the order will be recursing to the end, and add the last node first
 		// then the second last node, and so on
 		// the last node will not have any children, it will bypass the while loop and be added first
-		while (children.length > 0) {
-			dfs(children.shift()!);
+		while (destinations.length > 0) {
+			dfs(destinations.shift()!);
 		}
 
-		// add the node to the front of the flight plan
+		// add the origination to the front of the flight plan
 		// since recursion is done before adding the node, we are adding the nodes in reverse order
-		flightPlan.unshift(p);
+		//IMPORTANT: we are addinging departure, not destination
+		flightPlan.unshift(departure);
 	}
 
 	dfs("JFK");
