@@ -1,19 +1,19 @@
 //test number of provinces, with disjointed set
 // 	}
 
-import { countComponents } from "./bfs and dfs/union find/Count Connected Components";
+import { findItinerary } from "./bfs and dfs/with backtracking/Reconstruct Itinerary";
 
 
 
-let n = 6
-let edges = [[0, 1], [1, 2], [2, 3], [4, 5]]
+
+let edges = [["JFK", "KUL"], ["JFK", "NRT"], ["NRT", "JFK"]]
 
 
 
-const expected = 2;
-const output = countComponents(n, edges);
+const expected = ["JFK", "NRT", "JFK", "KUL"]
+const output = findItinerary(edges);
 
-if (output !== expected)
+if (!output.every((val, index) => val === expected[index]))
 	console.error(`Output: ${output}, Expected: ${expected}`);
 else
 	console.log("Success!!!")
