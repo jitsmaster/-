@@ -42,6 +42,11 @@ class Trie {
 	}
 
 	insert(word: string): void {
+		//handle edge case of empty string as root
+		if (word === "") {
+			this.rootNodes.set("", new Node("", true))
+		}
+
 		const chrs = word.split("")
 		let parentNode: Node | undefined
 		for (let i = 0; i < chrs.length; i++) {
@@ -63,6 +68,11 @@ class Trie {
 	}
 
 	search(word: string): boolean {
+		//handle edge case of empty string as root
+		if (word === "") {
+			return this.rootNodes.get("")?.isEnd || false
+		}
+
 		const chrs = word.split("")
 		let parentNode: Node | undefined
 		while (chrs.length) {
