@@ -40,6 +40,9 @@
  */
 
 export function combinationSum(candidates: number[], target: number): number[][] {
+	//Complexity: O(2^n) since we have 2 branches for each number, and we have n numbers
+	//Space complexity: O(n), result array, breadCrumb array, and the recursion stack, out of them cap by n
+
 	const res: number[][] = []
 	dfsWithBacktrack(target, 0, [])
 
