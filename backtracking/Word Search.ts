@@ -47,7 +47,6 @@ function exist(board: string[][], word: string): boolean {
 	//Space: O(l) for recursion stack
 
 	const firstChr = word[0]
-	let hasWord = false;
 	for (let r = 0; r < board.length; r++) {
 		for (let c = 0; c < board[0].length; c++) {
 			if (board[r][c] === firstChr) {
@@ -71,7 +70,6 @@ function exist(board: string[][], word: string): boolean {
 
 		//on last char, and it matches, we found the word, return true
 		if (remain.length === 1 && board[r][c] === remain) {
-			hasWord = true;
 			return true;
 		}
 
