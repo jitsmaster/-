@@ -1,14 +1,15 @@
 //test number of provinces, with disjointed set
 // 	}
 
-import { combinationSum } from "./backtracking/Combination Sum"
+import { solveNQueens } from "./backtracking/nqueens"
 
-const input = [2, 3, 6, 7]
-const tgt = 7
 
-const expected = [[2, 2, 3], [7]]
 
-const output = combinationSum(input, tgt)
+const input = 4
+
+const expected = [[".Q..", "...Q", "Q...", "..Q."], ["..Q.", "Q...", "...Q", ".Q.."]]
+
+const output = solveNQueens(input)
 
 if (JSON.stringify(output) === JSON.stringify(expected)) {
 	console.log("Test Passed")
