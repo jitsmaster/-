@@ -1,20 +1,21 @@
 //test number of provinces, with disjointed set
 // 	}
 
-import { solveNQueens } from "./backtracking/nqueens"
+import { findKthLargest } from "./heap and priority queue/kth-largest/Kth Largest Element in an Array - Quick Select"
 
 
 
-const input = 4
 
-const expected = [[".Q..", "...Q", "Q...", "..Q."], ["..Q.", "Q...", "...Q", ".Q.."]]
+const input = [3, 2, 1, 5, 6, 4]
 
-const output = solveNQueens(input)
+const expected = 5
 
-if (JSON.stringify(output) === JSON.stringify(expected)) {
+const output = findKthLargest(input, 2)
+
+if (expected === output) {
 	console.log("Test Passed")
 } else {
-	console.log(`Test Failed: ${JSON.stringify(output)} != ${JSON.stringify(expected)}`)
+	console.log(`Test Failed: ${output} != ${expected}`)
 }
 
 // dict.addWord("bad")
