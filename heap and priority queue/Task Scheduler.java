@@ -1,10 +1,10 @@
 
-import java.util.ArrayDeque;
 import java.util.Collections;
-import java.util.Deque;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.Queue;
 
 /**
  * You are given an array of CPU tasks, each represented by letters A to Z, and
@@ -65,7 +65,8 @@ class Solution {
         heap.addAll(map.values());
 
         //create a queue for delayed tasks
-        Deque<int[]> queue = new ArrayDeque<>();
+        // Deque<int[]> queue = new ArrayDeque<>();
+        Queue<int[]> queue = new LinkedList<>();
 
         int time = 0;
 
