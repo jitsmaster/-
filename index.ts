@@ -1,16 +1,17 @@
 //test number of provinces, with disjointed set
 // 	}
 
-import { findKthLargest } from "./heap and priority queue/kth-largest/Kth Largest Element in an Array - Quick Select"
+import { minMeetingRooms } from "./intervals/Meeting Rooms II"
 
 
 
 
-const input = [3, 2, 1, 5, 6, 4]
 
-const expected = 5
+const input = [[0, 10], [10, 20], [20, 30], [30, 40], [40, 50], [50, 60], [60, 70], [70, 80], [80, 90], [90, 100], [0, 100], [10, 90], [20, 80], [30, 70], [40, 60]]
 
-const output = findKthLargest(input, 2)
+const expected = 2
+
+const output = minMeetingRooms(input)
 
 if (expected === output) {
 	console.log("Test Passed")
