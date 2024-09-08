@@ -27,7 +27,7 @@ import { MinPriorityQueue } from "@datastructures-js/priority-queue";
  *
  * Note: This question is the same as 1296: https://leetcode.com/problems/divide-array-in-sets-of-k-consecutive-numbers/
  */
-export function isNStraightHand(hand: number[], groupSize: number): boolean {
+function isNStraightHand(hand: number[], groupSize: number): boolean {
 	//Analysis:
 	//This is a greedy solution, the greedy part is we always need to start the group from the smallest number
 	//so using a min heap to keep track of the smallest number
