@@ -1,24 +1,23 @@
 //test number of provinces, with disjointed set
 // 	}
 
-import { minInterval } from "./intervals/Minimum Interval to Include Each Query"
+import { isNStraightHand } from "./Greedy/Hand of Straights"
 
 
 
 
 
 
-const input = [[2, 3], [2, 5], [1, 8], [20, 25]]
-const queries = [2, 19, 5, 22]
+const input = [2, 1]
 
-const expected = [2, -1, 4, 6]
+const expected = true
 
-const output = minInterval(input, queries)
+const output = isNStraightHand(input, 2)
 
-if (expected.join(",") === output.join(",")) {
+if (output === expected) {
 	console.log("Test Passed")
 } else {
-	console.log(`Test Failed: [${output.join(", ")}] != [${expected.join(", ")}]`)
+	console.log(`Test Failed`)
 }
 
 // dict.addWord("bad")
