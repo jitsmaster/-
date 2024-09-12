@@ -49,7 +49,7 @@ function partitionLabels(s: string): number[] {
 		curSize++;
 		end = Math.max(lastIndexes.get(letter)!, end);
 
-		if (end === i || i === s.length - 1) {
+		if (end === i) { //no need to check if it reached the end (i === s.length - 1), sicne we know if the last letter is part of alphabet, it will be there.
 			//reach the end, push into collection and start over
 			sizes.push(curSize);
 			curSize = 0;
