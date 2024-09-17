@@ -18,8 +18,8 @@ export function minCostConnectPoints(points: number[][]): number {
 	// This is basically a BFS with heap instead of a queue.
 
 	//Complexity:
-	// Time: O(n^2 * log(n)) where n is the number of points (vertices)
-	// Space: O(n) for the size of priority queue and the visited set
+	// Time: O(n^2 * log(n)) where n is the number of points (vertices) - logn for the priority queue operations, n2 for the nested loop
+	// Space: O(n) for the size of priority queue, adjacency list of min distances and the visited set
 
 	/**
 	 * Prim's algorithm on building minimum spanning tree explained:
