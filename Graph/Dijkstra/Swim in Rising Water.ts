@@ -38,16 +38,19 @@ import { MinPriorityQueue } from "@datastructures-js/priority-queue";
 export function swimInWater(grid: number[][]): number {
 	//Dijkstra algo.
 	//Still the same principle, but how we calculate the weight is not the distance sum, but max of height for each cell
-	//dijkstra step 1: create adjacency map
-	//we don't really need it here, since we don't need to sum the weight
+	//we are skipping creating of adjacency map, since we know there are only 4 directions to go
+	//which means each node has fixed 4 children
+
 
 	const visited = new Set<number>();
 
+	//Dijkstra uses a Min Heap to replace queue of standard BFS
 	//min heap priority on the height of cell
 	//however, the height is not the cell itself, but the max height along the path to travel here
-	//each item as 2 values [row, col, maxheight]
+	//each item as 3 values [row, col, maxheight]
 	const minHeap = new MinPriorityQueue<[number, number, number]>(p => p[2]);
 
+	//helper function to get the coordinate value, which will be unique to each cell
 	function getCoordValue(row: number, col: number) {
 		return row * grid[0].length + col;
 	}
@@ -72,6 +75,7 @@ export function swimInWater(grid: number[][]): number {
 			return cell[2];
 		}
 
+		//add processed cell to visited
 		visited.add(getCoordValue(cell[0], cell[1]));
 
 		//BFS to 4 directions
@@ -82,9 +86,8 @@ export function swimInWater(grid: number[][]): number {
 				&& c >= 0
 				&& c < grid[0].length
 				&& !visited.has(getCoordValue(r, c))) {
-				const weight = Math.max(grid[r][c], cell[2]);
-				//enqueue
-				minHeap.enqueue([r, c, weight]);
+				//enqueue if not yet visited
+				minHeap.enqueue([r, c, (Math.max(grid[r][c], cell[2]))]);
 			}
 		}
 	}
