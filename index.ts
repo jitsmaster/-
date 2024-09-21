@@ -1,29 +1,18 @@
 //test number of provinces, with disjointed set
 // 	}
 
-import { isNStraightHand } from "./Greedy/Hand of Straights"
+import { swimInWater } from "./Graph/Dijkstra/Swim in Rising Water"
 
 
 
+const input = [[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [12, 13, 14, 15, 16], [11, 17, 18, 19, 20], [10, 9, 8, 7, 6]]
 
+const expected = 16
 
-
-const input = [2, 1]
-
-const expected = true
-
-const output = isNStraightHand(input, 2)
+const output = swimInWater(input)
 
 if (output === expected) {
 	console.log("Test Passed")
 } else {
 	console.log(`Test Failed`)
 }
-
-// dict.addWord("bad")
-// dict.addWord("dad")
-// dict.addWord("mad")
-// console.log(dict.search("pad")) //false
-// console.log(dict.search("bad")) //true
-// console.log(dict.search(".ad")) //true
-// console.log(dict.search("b..")) //true
