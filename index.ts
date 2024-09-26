@@ -1,18 +1,19 @@
 //test number of provinces, with disjointed set
 // 	}
 
-import { swimInWater } from "./Graph/Dijkstra/Swim in Rising Water"
+import { alienDictionary } from "./bfs and dfs/topo sort/Alien Dictionary"
 
 
 
-const input = [[0, 1, 2, 3, 4], [24, 23, 22, 21, 5], [12, 13, 14, 15, 16], [11, 17, 18, 19, 20], [10, 9, 8, 7, 6]]
 
-const expected = 16
+const input = ["hrn", "hrf", "er", "enn", "rfnn"]
 
-const output = swimInWater(input)
+const expected = "hernf"
+
+const output = alienDictionary(input)
 
 if (output === expected) {
 	console.log("Test Passed")
 } else {
 	console.log(`Test Failed`)
-}
+} 
