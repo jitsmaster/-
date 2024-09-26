@@ -51,6 +51,17 @@ function alienDictionary(words: string[]): string {
 	//first build the graph, which is in the format of adjacency list
 	const graph = new Map<string, Set<string>>();
 
+	//need to add all characters to the graph, otherwise we will miss some characters
+	//this is because we only get the character order when 2 words are compared
+	//so we need to add all characters to the graph
+	for (const word of words) {
+		for (const char of word) {
+			if (!graph.has(char)) {
+				graph.set(char, new Set());
+			}
+		}
+	}
+
 	//add the characters to the graph
 	//what we do is pair 2 words in the dictionary use them to get a character order
 	//each 2 words we can only get 1 character order
@@ -69,12 +80,9 @@ function alienDictionary(words: string[]): string {
 		while (j < Math.min(word1.length, word2.length)) {
 			const [char1, char2] = [word1[j], word2[j]];
 			if (char1 !== char2) {
-				if (!graph.has(char1)) {
-					graph.set(char1, new Set());
-				}
-
 				graph.get(char1)!.add(char2);
-				break;
+				break; //important, only 1 character order can be found from 2 words, so don't keep on going
+				//otherwise we will get wrong information
 			}
 			j++;
 		}
@@ -101,11 +109,10 @@ function alienDictionary(words: string[]): string {
 
 		visited.set(node, "visiting");
 
-		if (graph.has(node)) {
-			for (const child of graph.get(node)!) {
-				if (podfs(child) === "invalid") {
-					return "invalid";
-				}
+		const children = Array.from(graph.get(node) ?? new Set<string>());
+		for (const child of children) {
+			if (podfs(child) === "invalid") {
+				return "invalid";
 			}
 		}
 

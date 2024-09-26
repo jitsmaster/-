@@ -6,9 +6,9 @@ import { alienDictionary } from "./bfs and dfs/topo sort/Alien Dictionary"
 
 
 
-const input = ["hrn", "hrf", "er", "enn", "rfnn"]
+const input = ["abc", "bcd", "cde"]
 
-const expected = "hernf"
+const expected = "edabc"
 
 const output = alienDictionary(input)
 
