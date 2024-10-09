@@ -14,5 +14,5 @@ function fibonacciTabulationBackwards(n: number): number {
         table[i + 1] += table[i];
         table[i + 2] += table[i];
     }
-    return table[n];
+    return table[table.length - 1];
 }
