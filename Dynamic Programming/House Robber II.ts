@@ -50,6 +50,7 @@ function rob(nums: number[]): number {
 
 	const start = nums[0];
 
+	//in place array manipulation to avoid extra space
 	//remove first element
 	nums.splice(0, 1);
 	const sum1 = robLinear(nums);
