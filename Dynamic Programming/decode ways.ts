@@ -74,6 +74,7 @@ function numDecodings(s: string): number {
         // If current digit is not '0', we can use it as a single character
         // Add all the ways we could decode up to the previous position
         if (s[i - 1] !== '0') {
+            //e.g. "226" -> 2nd "2" can be decoded as "B", so we inherit ways from 2nd "2" for "6"
             dp[i] += dp[i - 1];
         }
 
@@ -83,6 +84,8 @@ function numDecodings(s: string): number {
         // If valid two-digit number, add all the ways we could decode
         // up to two positions back
         if (twoDigit >= 10 && twoDigit <= 26) {
+            //reason to inherit from i - 2: we can decode the two digits as a single letter
+            //e.g. "226" -> "22" can be decoded as "V", so we inherit ways from "2" for "6"
             dp[i] += dp[i - 2];
         }
     }
