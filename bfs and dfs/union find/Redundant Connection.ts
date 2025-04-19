@@ -36,6 +36,10 @@ function findRedundantConnection(edges: number[][]): number[] {
 	//we use union find to build up the tree first, then we will encounter the redundant edge that will indicate a and b already connected
 	//that will normally be the last edge added added to an established tree.
 
+	//Complexity:
+	//Time: O(n * α(n)) - where α(n) is the inverse Ackermann function, which grows extremely slowly and is nearly constant for practical input sizes.
+	//Space: O(n) - for the parent and rank arrays in the disjoint set.
+
 	const ds = new QuickDisjointSetEasyToExplain(edges.length);
 
 	for (let [s, t] of edges) {
