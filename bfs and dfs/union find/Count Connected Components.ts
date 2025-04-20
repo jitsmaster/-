@@ -1,47 +1,53 @@
 /**
- * There is an undirected graph with n nodes. There is also an edges array,
- * where edges[i] = [a, b] means that there is an edge between node a and node b
- * in the graph.
- * 
- * Return the total number of connected components in that graph.
- * 
- * Example 1:
- * 
- * Input:
- * n=3
- * edges=[[0,1], [0,2]]
- * 
- * Output:
- * 1
- * 
- * Example 2:
- * 
- * Input:
- * n=6
- * edges=[[0,1], [1,2], [2,3], [4,5]]
- * 
- * Output:
- * 2
- * 
- * Constraints:
- * 
- * 1 <= n <= 100
- * 0 <= edges.length <= n * (n - 1) / 2
+ * Count Connected Components in Undirected Graph using Disjoint Set (Union-Find)
+ *
+ * This implementation uses Disjoint Set data structure with:
+ * 1. Path Compression - makes future queries faster
+ * 2. Union by Size - keeps trees flat by always attaching smaller tree to larger one
+ *
+ * Key Concepts:
+ * - Each node starts as its own parent (disjoint set)
+ * - Union operation connects two nodes by making one's root point to another's root
+ * - Find operation locates root parent and performs path compression
+ * - Number of connected components equals number of roots (negative values in rank table)
+ *
+ * Time Complexity:
+ * - Initialization: O(n)
+ * - Find: O(α(n)) amortized (inverse Ackermann function, effectively constant)
+ * - Union: O(α(n)) amortized
+ *
+ * Space Complexity: O(n)
+ *
+ * Example Visualization:
+ *
+ * Initial state for n=5:
+ * Nodes: 0 1 2 3 4
+ * Parent: -1 -1 -1 -1 -1 (each is its own root with size 1)
+ *
+ * After union(0,1) and union(2,3):
+ * Nodes: 0 1 2 3 4
+ * Parent: -2 0 -2 2 -1 (two trees: 0->1 and 2->3, plus single node 4)
+ *
+ * Path Compression Example:
+ * Tree structure before find(3): 0->1->2->3
+ * _rankTable = [-4, 0, 1, 2]
+ * After find(3):
+ * _rankTable = [-4, 0, 0, 0] (all nodes now point directly to root 0)
  */
 function countComponents(n: number, edges: number[][]): number {
-	//this is a union find /disjoint set problem
-	//except instead of use the disjoint set structure typically:
-	//1. finding all nodes related to a node (friendly)
-	//2. finding the tree (group) with largest node count (friend count)
-	//Here, we use it to count number of trees (groups)
-
-	//Complexity:
-	//Time complexity: O(e lg* e) where e is the number of nodes and m is the number of edges
-	//NOTE: lg* is the iterated logarithm function, which is the number of times the logarithm function must be applied before the result is less than or equal to 1
-	//It often also called inverse Ackermann function, which is a very slowly growing function
-	//And lg* is generally faster than log(n) for any practical n
-	//Space complexity: O(v) for the disjoint set structure or v + 1 for the link table
-
+	/**
+	 * Counts connected components in undirected graph using Disjoint Set
+	 *
+	 * Algorithm:
+	 * 1. Initialize DisjointSet with n nodes (each node is its own component)
+	 * 2. For each edge, union the two nodes
+	 * 3. Each successful union reduces component count by 1
+	 * 4. Final component count is the answer
+	 *
+	 * @param n - number of nodes in graph (0 to n-1)
+	 * @param edges - array of edges connecting nodes
+	 * @returns number of connected components
+	 */
 	const dSet = new DisjointSet(n); //this one doesn't need related node count at all, since we don't need to quicks finding root or all friends count
 	//union each edge
 	for (let [a, b] of edges) {
@@ -56,12 +62,20 @@ function countComponents(n: number, edges: number[][]): number {
  * Represents a Disjoint Set data structure.
  */
 export class DisjointSet {
-	private _linkTable!: number[];
+	/**
+	 * The rank table serves dual purpose:
+	 * - For root nodes: stores negative of tree size (e.g. -3 means tree size 3)
+	 * - For non-root nodes: stores parent index
+	 *
+	 * Example:
+	 * If node 1's parent is 0 and node 0 is root with size 3:
+	 * _rankTable = [-3, 0, ...]
+	 */
+	private _rankTable!: number[];
 
 	/**
-	 * This is the count of unique roots in the disjoint set.
-	 * It is used to keep track of the number of groups in the disjoint set.
-	 * Since counting the number of negative node is not accurate
+	 * Tracks number of unique roots (connected components)
+	 * Decremented each time two components are merged
 	 */
 	private _uniqueRootsCount: number;
 
@@ -71,7 +85,7 @@ export class DisjointSet {
 	 */
 	constructor(length: number) {
 		this._uniqueRootsCount = length;
-		this._linkTable = Array(length + 1).fill(-1);
+		this._rankTable = Array(length + 1).fill(-1);
 	}
 
 	/**
@@ -80,15 +94,26 @@ export class DisjointSet {
 	 * @returns The root of the node.
 	 */
 	find(n: number): number {
-		const val = this._linkTable[n]
+		/**
+		 * Finds root of node with path compression
+		 *
+		 * Path compression flattens the structure by making nodes point directly to root
+		 *
+		 * Example:
+		 * Before find(3) on 0->1->2->3:
+		 *   _rankTable = [-4, 0, 1, 2]
+		 * After find(3):
+		 *   _rankTable = [-4, 0, 0, 0] (all nodes now point directly to root 0)
+		 */
+		const val = this._rankTable[n];
 
-		//if the value of the node is negative, it's a root node, or possible not yet connected not, only root nodes has negative value
+		// Negative value means this is a root node, or single node
 		if (val < 0)
 			return n;
 
-		//if not root, find the root of the parent node recursively
-		this._linkTable[n] = this.find(val);
-		return this._linkTable[n];
+		// Path compression: make node point directly to root
+		this._rankTable[n] = this.find(val);
+		return this._rankTable[n];
 	}
 
 	/**
@@ -98,29 +123,39 @@ export class DisjointSet {
 	 * @returns True if a new union is created, false if the nodes are already unioned.
 	 */
 	union(a: number, b: number): boolean {
-		let rootA = this.find(a);
-		let rootB = this.find(b);
-		if (rootA === rootB) {
+		/**
+		 * Unions two sets by size (smaller tree attaches to larger tree)
+		 *
+		 * When two trees have same size:
+		 * - Arbitrarily chooses one as new root (by swapping in line 128)
+		 * - New tree size becomes sum of both sizes
+		 * - Tree height increases by 1 but path compression will optimize later finds
+		 *
+		 * Example with same size trees:
+		 * Before union(1,3) where:
+		 * - Tree A (root 0, size 2): 0->1
+		 * - Tree B (root 2, size 2): 2->3
+		 * _rankTable = [-2, 0, -2, 2]
+		 *
+		 * After union(1,3):
+		 * - Tree A becomes root (arbitrary choice)
+		 * - New size = 2 + 2 = 4
+		 * _rankTable = [-4, 0, 0, 2]
+		 */
+		let rankA = this.find(a);
+		let rankB = this.find(b);
+		if (rankA === rankB) {
 			return false; //already unioned, not counting as new union
 		}
-		if (this._linkTable[rootA] < this._linkTable[rootB]) {
-			[rootB, rootA] = [rootA, rootB];
-		}
-		this._linkTable[rootA] += this._linkTable[rootB];
-		this._linkTable[rootB] = rootA;
 
-		//going down to find all descendant nodes of rootB
-		//and update them all pointing to root a too,
-		//so every node in the group is pointing to root
-		//NOTE: this is called path compression
-		let rootBChild = this._linkTable.indexOf(rootB);
-		while (rootBChild > -1) {
-			this._linkTable[rootBChild] = rootA
-			rootBChild = this._linkTable.indexOf(rootBChild);
+		// Ensure rankA is the larger tree (more negative means larger size)
+		if (this._rankTable[rankA] < this._rankTable[rankB]) {
+			[rankB, rankA] = [rankA, rankB];
 		}
 
-		//each union reduces the amount of unique roots
-		this._uniqueRootsCount--;
+		// Merge smaller tree into larger one
+		this._rankTable[rankA] += this._rankTable[rankB]; // Add sizes
+		this._rankTable[rankB] = rankA; // Point smaller tree to larger root
 
 		return true; //new union
 	}
@@ -132,7 +167,7 @@ export class DisjointSet {
 	 */
 	relatedNodeCount(n: number): number {
 		//if is root, will have negative value, return the value directly
-		const val = this._linkTable[n];
+		const val = this._rankTable[n];
 		if (val < 0) {
 			return -val;
 		}
@@ -140,7 +175,7 @@ export class DisjointSet {
 		//if not root, should just be on step to the root,
 		//so return the negative value of the root
 		//NOTE: if not path compressed disjoint set, this will be wrong
-		return -this._linkTable[val];
+		return -this._rankTable[val];
 	}
 
 	/**
@@ -148,7 +183,7 @@ export class DisjointSet {
 	 * @returns The count of nodes in the biggest group.
 	 */
 	biggestGroupCount(): number {
-		return -Math.min(...this._linkTable);
+		return -Math.min(...this._rankTable);
 	}
 
 	/**

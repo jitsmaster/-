@@ -74,12 +74,10 @@ function canFinish(numCourses: number, prerequisites: number[][]): boolean {
 	// Add the courses with 0 in-degree to the queue, these are the courses that can be taken first
 	// also called "source" nodes. We will start with these nodes and then keep adding the nodes with 0 in-degree
 	const queue: number[] = [];
-	inDegree.forEach((value, key) => {
-		//only add courses with no prerequisites
-		if (value === 0) {
-			queue.push(key);
-		}
-	});
+	for (let [course, indeg] of inDegree) {
+		if (indeg === 0)
+			queue.push(course)
+	}
 
 	//use bfs, since we can start with multiple nodes in queue
 	//have queue inited, and repeat to add more items to the queue
